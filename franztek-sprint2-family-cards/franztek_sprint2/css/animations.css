@@ -1,0 +1,5 @@
+@keyframes pulse { 0%,100% { opacity: .6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
+.status.home::before { content: "● "; animation: pulse 1.7s infinite; display: inline-block; }
+.status.away::before { content: "● "; }
+.status.driving::before { content: "● "; }
+.status.sleeping::before { content: "● "; }

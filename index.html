@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FranzTek Security OS</title>
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/cards.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+  <main class="ft-shell">
+    <header class="ft-topbar">
+      <section>
+        <p class="ft-kicker">FranzTek</p>
+        <h1>Security OS</h1>
+      </section>
+      <section class="ft-status-strip">
+        <div class="status-pill secure"><span></span> House Secure</div>
+        <div class="status-pill">Sprint 2: Family Cards</div>
+        <div class="status-pill" id="clock">--:--</div>
+      </section>
+    </header>
+
+    <section class="ft-grid">
+      <section class="family-zone">
+        <div class="section-title">
+          <h2>Family</h2>
+          <p>Live presence, phones, last seen and quick actions</p>
+        </div>
+        <div class="family-cards" id="familyCards"></div>
+      </section>
+
+      <aside class="ai-panel">
+        <p class="ft-kicker">FranzTek AI</p>
+        <h2>Good evening.</h2>
+        <p id="aiSummary">Checking family presence and security status.</p>
+        <div class="suggestion-card">
+          <strong>Suggested</strong>
+          <p>Nobody home? Arm security and turn on front lights.</p>
+          <button>Review</button>
+        </div>
+      </aside>
+
+      <section class="camera-zone">
+        <div class="section-title">
+          <h2>Live Cameras</h2>
+          <p>Front, doorbell and driveway snapshots</p>
+        </div>
+        <div class="camera-grid" id="cameraGrid"></div>
+      </section>
+
+      <section class="timeline-zone">
+        <div class="section-title">
+          <h2>Family Timeline</h2>
+          <p>Recent arrivals, motion and security events</p>
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </section>
+    </section>
+  </main>
+
+  <div class="welcome-toast hidden" id="welcomeToast">
+    <span>👋</span>
+    <div>
+      <strong id="welcomeName">Welcome Home</strong>
+      <p id="welcomeDetail">Front Camera</p>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/family.js"></script>
+  <script src="js/cameras.js"></script>
+  <script src="js/timeline.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
