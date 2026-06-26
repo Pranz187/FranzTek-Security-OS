@@ -24,24 +24,6 @@
       "batteryEntity": "sensor.rita_phone_battery_level"
     }
   ],
-  "cameras": [
-    {
-      "name": "Front",
-      "frigateName": "front"
-    },
-    {
-      "name": "Doorbell",
-      "frigateName": "doorbell"
-    },
-    {
-      "name": "Driveway",
-      "frigateName": "driveway"
-    },
-    {
-      "name": "Backyard",
-      "frigateName": "backyard"
-    }
-  ],
   "quickButtons": {
     "showFrontDoor": "button.fkeller187_gmail_com_show_front_door"
   }

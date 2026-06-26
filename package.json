@@ -1,7 +1,7 @@
 {
   "name": "franztek-security-os",
-  "version": "0.3.0",
-  "description": "FranzTek Security OS - smart home, security, family and Frigate dashboard.",
+  "version": "0.5.0",
+  "description": "FranzTek Security OS - Smart Security dashboard for Home Assistant and Frigate.",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",

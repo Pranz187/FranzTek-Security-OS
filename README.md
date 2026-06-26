@@ -1,23 +1,24 @@
-# FranzTek Security OS v0.3.0
+# FranzTek Security OS v0.5.0
 
-## Sprint 3
-
-Security-focused update.
+## Smart Security
 
 ### Added
 
-- Frigate camera grid.
-- Frigate recent event timeline.
-- Snapshot and clip links.
-- Camera modal full-screen view.
-- Security summary card.
-- Existing Family, Weather, and Alexa button retained.
+- Large primary camera layout.
+- Auto-discovered Frigate cameras.
+- Snapshot-based event cards.
+- Known plate / vehicle labels when available.
+- Improved timeline layout.
+- Better security summary.
 
-## Install
+## Upgrade
+
+Copy your old `.env` into this folder.
+
+Then:
 
 ```cmd
 npm install
-copy .env.example .env
 npm start
 ```
 
@@ -27,22 +28,10 @@ Open:
 http://localhost:8088
 ```
 
-## Upgrade
+## Push to GitHub
 
-Copy your old `.env` into this folder.
-
-Check this setting:
-
-```text
-FRIGATE_URL=http://YOUR_FRIGATE_IP:5000
+```cmd
+git add .
+git commit -m "Add v0.5.0 smart security event cards"
+git push
 ```
-
-## Camera names
-
-Edit:
-
-```text
-config/config.json
-```
-
-Change the camera `frigateName` values to match your Frigate camera names.
