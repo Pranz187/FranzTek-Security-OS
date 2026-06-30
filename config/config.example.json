@@ -1,0 +1,23 @@
+{
+  "family": [
+    {
+      "name": "Person 1",
+      "emoji": "👤",
+      "device": "Phone",
+      "personEntity": "person.person1",
+      "batteryEntity": "sensor.person1_phone_battery",
+      "batteryStateEntity": "sensor.person1_phone_battery_state",
+      "alarmEntity": "sensor.person1_next_alarm"
+    },
+    {
+      "name": "Person 2",
+      "emoji": "👤",
+      "device": "Phone",
+      "personEntity": "person.person2",
+      "batteryEntity": "sensor.person2_phone_battery"
+    }
+  ],
+  "quickButtons": {
+    "showFrontDoor": "button.show_front_door"
+  }
+}
