@@ -1,4 +1,4 @@
-let latestSnapshot = null;
+window.latestSnapshot = null;
 
 const protocol = location.protocol === "https:" ? "wss" : "ws";
 
@@ -21,11 +21,11 @@ socket.onerror = (err) => {
 
 socket.onmessage = (event) => {
     try {
-        latestSnapshot = JSON.parse(event.data);
+        window.latestSnapshot = JSON.parse(event.data);
 
         window.dispatchEvent(
             new CustomEvent("snapshot", {
-                detail: latestSnapshot
+                detail: window.latestSnapshot
             })
         );
     } catch (err) {
