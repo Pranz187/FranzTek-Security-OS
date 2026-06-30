@@ -1,84 +1,54 @@
 # FranzTek Security OS
 
-<p align="center">
-  <img src="public/images/logo/franztek.png" width="180">
-</p>
-
-<h3 align="center">
-AI Powered Home Security Dashboard
-</h3>
-
-<p align="center">
-Built for Home Assistant • Frigate • AI Detection
-</p>
-
----
+A modern security dashboard for Home Assistant and Frigate.
 
 ## Features
 
-- 📷 Live Frigate Cameras
-- 👨‍👩‍👧 Family Presence
-- 🚗 Vehicle Recognition
-- 🔤 License Plate Recognition
-- 😀 Face Recognition
-- 📦 Package Detection
-- 🌦 Weather
-- 💡 Smart Lighting
-- 📜 AI Event Timeline
-- 🏠 Home Assistant Integration
+- 📹 Live Frigate camera feeds
+- 🚨 Recent events with thumbnails
+- 👨‍👩‍👧 Family presence
+- 💡 Light controls
+- 🌦️ Weather
+- 🔒 Security summary
+- ⚡ Real-time dashboard
 
----
+## Requirements
 
-## Screenshots
-
-Coming soon...
-
----
+- Node.js 20+
+- Home Assistant
+- Frigate NVR
 
 ## Installation
 
+Clone the repository:
+
 ```bash
 git clone https://github.com/Pranz187/FranzTek-Security-OS.git
-
 cd FranzTek-Security-OS
+```
 
+Install dependencies:
+
+```bash
 npm install
+```
 
+Create your environment file:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` with your Home Assistant and Frigate settings.
+
+Start the server:
+
+```bash
 npm start
 ```
 
-Open
+Open:
 
-http://localhost:3000
-
----
-
-## Roadmap
-
-### Version 0.6
-- Project Cleanup ✅
-- Live Dashboard
-- Home Assistant Integration
-
-### Version 0.7
-- Frigate AI
-- Timeline
-- Camera Improvements
-
-### Version 0.8
-- Settings
-- Themes
-- Mobile Support
-
-### Version 0.9
-- Installer
-- Multi Dashboard
-
-### Version 1.0
-First Public Release
-
----
-
-## License
-
-MIT License
+```
+http://localhost:8088
+```
