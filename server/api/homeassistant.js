@@ -1,4 +1,4 @@
-const config = require("./config");
+const config = require("../../config/config");
 
 async function haFetch(path, options = {}) {
   if (!config.haUrl || !config.haToken) {

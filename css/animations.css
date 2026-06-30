@@ -1,7 +1,0 @@
-@keyframes pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(1.45); opacity:.55; } }
-.welcome-toast { position:fixed; top:22px; left:50%; transform:translateX(-50%); z-index:20; display:flex; align-items:center; gap:14px; padding:16px 20px; border-radius:22px; background:rgba(14,20,28,.92); border:1px solid rgba(46,233,139,.34); box-shadow:0 22px 70px rgba(0,0,0,.45), 0 0 40px rgba(46,233,139,.15); backdrop-filter:blur(18px); animation:slideDown .35s ease; }
-.welcome-toast span { font-size:34px; }
-.welcome-toast strong { display:block; font-size:20px; }
-.welcome-toast p { margin:2px 0 0; color:var(--muted); }
-.hidden { display:none; }
-@keyframes slideDown { from { opacity:0; transform:translate(-50%, -24px); } to { opacity:1; transform:translate(-50%, 0); } }

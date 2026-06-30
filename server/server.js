@@ -3,10 +3,9 @@ const http = require("http");
 const path = require("path");
 const fs = require("fs");
 const WebSocket = require("ws");
-const config = require("./config");
-const ha = require("./homeassistant");
-const frigate = require("./frigate");
-
+const config = require("../config/config");
+const ha = require("./api/homeassistant");
+const frigate = require("./api/frigate");
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });

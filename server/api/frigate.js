@@ -1,4 +1,4 @@
-const config = require("./config");
+const config = require("../../config/config");
 
 function frigateBase() {
   return (config.frigateUrl || "").replace(/\/$/, "");
