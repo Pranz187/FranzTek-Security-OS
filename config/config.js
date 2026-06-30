@@ -6,5 +6,4 @@ module.exports = {
   haToken: process.env.HA_TOKEN,
   frigateUrl: process.env.FRIGATE_URL,
   weatherEntity: process.env.WEATHER_ENTITY || "weather.forecast_home",
-  alexaFrontDoorButton: process.env.ALEXA_FRONT_DOOR_BUTTON || "button.fkeller187_gmail_com_show_front_door"
-};
+  alexaFrontDoorButton: process.env.ALEXA_FRONT_DOOR_BUTTON || 
