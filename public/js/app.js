@@ -61,18 +61,11 @@ function updateLight(buttonIndex, state) {
   btn.classList.toggle("on", on);
 }
 
-async function refreshLights() {
-  try {
-    const snap = await fetch("/api/snapshot").then(r => r.json());
-
-    LIGHTS.forEach(light => {
-      const state = snap.states?.[light.entity]?.state || "off";
-      updateLight(light.button, state);
-    });
-
-  } catch (e) {
-    console.error(e);
-  }
+function updateLightsFromSnapshot(snapshot) {
+  LIGHTS.forEach(light => {
+    const state = snapshot.states?.[light.entity]?.state || "off";
+    updateLight(light.button, state);
+  });
 }
 
 function setupLightButtons() {
@@ -92,7 +85,7 @@ function setupLightButtons() {
           }
         );
 
-        await refreshLights();
+        // WebSocket will update the light state
 
       } catch (err) {
 
@@ -118,8 +111,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setupLightButtons();
 
-  refreshLights();
-
-  setInterval(refreshLights, 3000);
+  window.addEventListener("snapshot", (e) => {
+    updateLightsFromSnapshot(e.detail);
+  });
 
 });

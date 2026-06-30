@@ -48,5 +48,6 @@ async function loadWeather() {
   }
 }
 
-loadWeather();
-setInterval(loadWeather, 60000);
+window.addEventListener("snapshot", (e) => {
+    renderWeather(e.detail);
+});

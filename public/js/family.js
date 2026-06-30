@@ -53,5 +53,6 @@ async function loadFamily() {
   renderFamily(snapshot);
 }
 
-loadFamily();
-setInterval(loadFamily, 7000);
+window.addEventListener("snapshot", (e) => {
+    renderFamily(e.detail);
+});
