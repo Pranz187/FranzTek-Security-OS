@@ -1,70 +1,125 @@
 const CAMERA_URLS = {
-  front: [
-    "/api/front/latest.jpg",
-    "/api/frigate/front/latest.jpg",
-    "http://192.168.5.84:5000/api/front/latest.jpg"
-  ],
-  doorbell: [
-    "/api/front_doorbell/latest.jpg",
-    "/api/frigate/front_doorbell/latest.jpg",
-    "http://192.168.5.84:5000/api/front_doorbell/latest.jpg"
-  ]
+  front: "/api/frigate/camera/front/mjpeg",
+  doorbell: "/api/frigate/camera/front_doorbell/mjpeg"
 };
+
+const LIGHTS = [
+  {
+    entity: "light.front_light",
+    button: 0
+  },
+  {
+    entity: "light.front_door",
+    button: 1
+  }
+];
 
 function setClock() {
   const now = new Date();
 
-  document.getElementById("clock").textContent = now.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
+  document.getElementById("clock").textContent =
+    now.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit"
+    });
 
-  document.getElementById("date").textContent = now.toLocaleDateString([], {
-    weekday: "long",
-    day: "numeric",
-    month: "long"
-  });
+  document.getElementById("date").textContent =
+    now.toLocaleDateString([], {
+      weekday: "long",
+      day: "numeric",
+      month: "long"
+    });
 }
 
-function cycleImage(id, urls) {
+function setupCamera(id, url) {
   const img = document.getElementById(id);
-  let index = 0;
+  if (!img) return;
 
-  function load() {
-    img.src = `${urls[index]}?t=${Date.now()}`;
-  }
+  img.src = url;
 
   img.onerror = () => {
-    index = (index + 1) % urls.length;
-
-    if (index === 0) {
-      img.style.opacity = ".25";
-    } else {
-      load();
-    }
+    img.style.opacity = ".25";
   };
+}
 
-  load();
-  setInterval(load, 2000);
+function updateLight(buttonIndex, state) {
+  const btn = document.querySelectorAll(".light-tile")[buttonIndex];
+  if (!btn) return;
+
+  const label = btn.querySelector("small");
+  const indicator = btn.querySelector("i");
+
+  const on = state === "on";
+
+  label.textContent = on ? "On" : "Off";
+  label.style.color = on ? "var(--green)" : "#a7b7c9";
+
+  if (indicator) {
+    indicator.style.background = on ? "var(--blue)" : "#344152";
+  }
+
+  btn.classList.toggle("on", on);
+}
+
+async function refreshLights() {
+  try {
+    const snap = await fetch("/api/snapshot").then(r => r.json());
+
+    LIGHTS.forEach(light => {
+      const state = snap.states?.[light.entity]?.state || "off";
+      updateLight(light.button, state);
+    });
+
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 function setupLightButtons() {
-  document.querySelectorAll(".light-tile").forEach((btn) => {
-    btn.onclick = () => {
-      const state = btn.querySelector("small");
-      const isOn = state.textContent === "On";
 
-      state.textContent = isOn ? "Off" : "On";
-      state.style.color = isOn ? "#a7b7c9" : "var(--green)";
-      btn.querySelector("i").style.background = isOn ? "#344152" : "var(--blue)";
-    };
+  document.querySelectorAll(".light-tile").forEach((btn, index) => {
+
+    btn.addEventListener("click", async () => {
+
+      btn.style.opacity = ".6";
+
+      try {
+
+        await fetch(
+          `/api/ha/light/${LIGHTS[index].entity.replace("light.","")}/toggle`,
+          {
+            method: "POST"
+          }
+        );
+
+        await refreshLights();
+
+      } catch (err) {
+
+        console.error(err);
+
+      }
+
+      btn.style.opacity = "1";
+
+    });
+
   });
+
 }
 
-setClock();
-setInterval(setClock, 1000);
+document.addEventListener("DOMContentLoaded", () => {
 
-cycleImage("front-camera", CAMERA_URLS.front);
-cycleImage("doorbell-camera", CAMERA_URLS.doorbell);
+  setClock();
+  setInterval(setClock, 1000);
 
-setupLightButtons();
+  setupCamera("front-camera", CAMERA_URLS.front);
+  setupCamera("doorbell-camera", CAMERA_URLS.doorbell);
+
+  setupLightButtons();
+
+  refreshLights();
+
+  setInterval(refreshLights, 3000);
+
+});

@@ -6,6 +6,7 @@ const WebSocket = require("ws");
 const config = require("../config/config");
 const ha = require("./api/homeassistant");
 const frigate = require("./api/frigate");
+
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
@@ -20,14 +21,20 @@ function readAppConfig() {
 }
 
 function allTrackedEntities(appConfig) {
-  const entities = new Set([config.weatherEntity]);
+  const entities = new Set([
+    config.weatherEntity,
+    "light.front_light",
+    "light.front_door"
+  ]);
+
   for (const p of appConfig.family || []) {
     if (p.personEntity) entities.add(p.personEntity);
     if (p.batteryEntity) entities.add(p.batteryEntity);
     if (p.batteryStateEntity) entities.add(p.batteryStateEntity);
     if (p.alarmEntity) entities.add(p.alarmEntity);
   }
-  return [...entities];
+
+  return [...entities].filter(Boolean);
 }
 
 function findPlateInEvent(event) {
@@ -57,6 +64,7 @@ function inferEventKind(event) {
   if (label.includes("person") || label.includes("face") || sub.includes("face")) return "person";
   if (label.includes("package") || label.includes("amazon") || label.includes("fedex") || label.includes("ups") || label.includes("dhl")) return "package";
   if (label.includes("dog") || label.includes("cat")) return "animal";
+
   return "event";
 }
 
@@ -88,7 +96,7 @@ async function buildSnapshot() {
   const knownPlates = await frigate.getKnownPlates();
 
   const snapshot = {
-    version: "0.5.0",
+    version: "0.6.0",
     time: new Date().toISOString(),
     config: {
       family: appConfig.family || [],
@@ -123,16 +131,27 @@ async function buildSnapshot() {
 
 function broadcast(data) {
   const payload = JSON.stringify(data);
+
   for (const client of wss.clients) {
-    if (client.readyState === WebSocket.OPEN) client.send(payload);
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(payload);
+    }
   }
 }
 
 async function proxyBinary(req, res, upstreamUrl, fallbackType) {
   try {
     const upstream = await fetch(upstreamUrl);
-    if (!upstream.ok || !upstream.body) return res.status(upstream.status).send("Unavailable");
-    res.setHeader("Content-Type", upstream.headers.get("content-type") || fallbackType);
+
+    if (!upstream.ok || !upstream.body) {
+      return res.status(upstream.status).send("Unavailable");
+    }
+
+    res.setHeader(
+      "Content-Type",
+      upstream.headers.get("content-type") || fallbackType
+    );
+
     const arrayBuffer = await upstream.arrayBuffer();
     res.send(Buffer.from(arrayBuffer));
   } catch (error) {
@@ -161,58 +180,99 @@ app.post("/api/ha/button/:entity/press", async (req, res) => {
   }
 });
 
+app.post("/api/ha/light/:entity/toggle", async (req, res) => {
+  try {
+    const result = await ha.callService(
+      "light",
+      "toggle",
+      `light.${req.params.entity}`
+    );
+
+    res.json({ ok: true, result });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
 app.get("/api/frigate/events", async (req, res) => {
   res.json(await enrichEvents(await frigate.getRecentEvents(20)));
 });
 
 app.get("/api/frigate/camera/:camera/mjpeg", async (req, res) => {
-  if (!frigate.frigateBase()) return res.status(500).send("FRIGATE_URL missing");
+  if (!frigate.frigateBase()) {
+    return res.status(500).send("FRIGATE_URL missing");
+  }
 
   const camera = encodeURIComponent(req.params.camera);
   const url = `${frigate.frigateBase()}/api/${camera}?h=720`;
 
   try {
     const upstream = await fetch(url);
+
     if (!upstream.ok || !upstream.body) {
       return res.status(upstream.status).send("Frigate camera stream unavailable");
     }
 
-    res.setHeader("Content-Type", upstream.headers.get("content-type") || "multipart/x-mixed-replace");
-    upstream.body.pipeTo(new WritableStream({
-      write(chunk) {
-        res.write(Buffer.from(chunk));
-      },
-      close() {
-        res.end();
-      },
-      abort() {
-        res.end();
-      }
-    })).catch(() => res.end());
+    res.setHeader(
+      "Content-Type",
+      upstream.headers.get("content-type") || "multipart/x-mixed-replace"
+    );
+
+    upstream.body.pipeTo(
+      new WritableStream({
+        write(chunk) {
+          res.write(Buffer.from(chunk));
+        },
+        close() {
+          res.end();
+        },
+        abort() {
+          res.end();
+        }
+      })
+    ).catch(() => res.end());
+
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
 
 app.get("/api/frigate/event/:eventId/snapshot", async (req, res) => {
-  if (!frigate.frigateBase()) return res.status(500).send("FRIGATE_URL missing");
-  const url = `${frigate.frigateBase()}/api/events/${encodeURIComponent(req.params.eventId)}/snapshot.jpg`;
+  if (!frigate.frigateBase()) {
+    return res.status(500).send("FRIGATE_URL missing");
+  }
+
+  const url =
+    `${frigate.frigateBase()}/api/events/${encodeURIComponent(req.params.eventId)}/snapshot.jpg`;
+
   proxyBinary(req, res, url, "image/jpeg");
 });
 
 app.get("/api/frigate/event/:eventId/thumbnail", async (req, res) => {
-  if (!frigate.frigateBase()) return res.status(500).send("FRIGATE_URL missing");
-  const url = `${frigate.frigateBase()}/api/events/${encodeURIComponent(req.params.eventId)}/thumbnail.jpg`;
+  if (!frigate.frigateBase()) {
+    return res.status(500).send("FRIGATE_URL missing");
+  }
+
+  const url =
+    `${frigate.frigateBase()}/api/events/${encodeURIComponent(req.params.eventId)}/thumbnail.jpg`;
+
   proxyBinary(req, res, url, "image/jpeg");
 });
 
 app.get("/api/frigate/event/:eventId/clip", (req, res) => {
-  if (!frigate.frigateBase()) return res.status(500).send("FRIGATE_URL missing");
-  const url = `${frigate.frigateBase()}/api/events/${encodeURIComponent(req.params.eventId)}/clip.mp4`;
+  if (!frigate.frigateBase()) {
+    return res.status(500).send("FRIGATE_URL missing");
+  }
+
+  const url =
+    `${frigate.frigateBase()}/api/events/${encodeURIComponent(req.params.eventId)}/clip.mp4`;
+
   res.redirect(url);
 });
 
-app.get("/health", (req, res) => res.json({ ok: true, version: "0.5.0" }));
+app.get("/health", (req, res) => {
+  res.json({ ok: true, version: "0.6.0" });
+});
 
 wss.on("connection", async (ws) => {
   ws.send(JSON.stringify(await buildSnapshot()));
@@ -227,5 +287,7 @@ setInterval(async () => {
 }, 7000);
 
 server.listen(config.port, () => {
-  console.log(`FranzTek Security OS v0.5.0 running at http://localhost:${config.port}`);
+  console.log(
+    `FranzTek Security OS v0.6.0 running at http://localhost:${config.port}`
+  );
 });

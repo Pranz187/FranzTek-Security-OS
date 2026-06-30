@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FranzTek Security OS</title>
-
   <link rel="stylesheet" href="/css/dashboard.css" />
 </head>
 
@@ -15,7 +14,7 @@
       <div class="logo">F</div>
       <div>
         <h1>FranzTek Security OS</h1>
-        <p>v0.6.0 � Smart Security</p>
+        <p>v0.6.0 · Smart Security</p>
       </div>
     </section>
 
@@ -23,7 +22,7 @@
       <article class="camera-card card">
         <div class="card-head">
           <h2>Front Camera</h2>
-          <span class="live">? LIVE</span>
+          <span class="live">● LIVE</span>
         </div>
         <img id="front-camera" alt="Front Camera">
       </article>
@@ -31,7 +30,7 @@
       <article class="camera-card card">
         <div class="card-head">
           <h2>Front Door</h2>
-          <span class="live">? LIVE</span>
+          <span class="live">● LIVE</span>
         </div>
         <img id="doorbell-camera" alt="Front Door">
       </article>
@@ -39,11 +38,11 @@
 
     <section class="weather-clock card">
       <div class="weather-block">
-        <div class="weather-icon">???</div>
+        <div class="weather-icon" id="weather-icon">🌤️</div>
         <div>
-          <strong id="weather-temp">14.6�C</strong>
-          <p>Partly cloudy</p>
-          <small>H: 16.8� &nbsp; L: 9.7�</small>
+          <strong id="weather-temp">--°C</strong>
+          <p id="weather-condition">Loading...</p>
+          <small id="weather-extra"></small>
         </div>
       </div>
 
@@ -55,64 +54,38 @@
 
     <section class="summary-card card">
       <div class="card-head">
-        <h2>??? Security Summary</h2>
+        <h2>🛡️ Security Summary</h2>
       </div>
 
-      <div class="summary-grid">
+      <div class="summary-grid" id="summary-grid">
         <div class="metric">
-          <span>??</span>
-          <small>Family Home</small>
-          <strong>Home</strong>
-        </div>
-
-        <div class="metric">
-          <span>???</span>
-          <small>Events</small>
-          <strong>12</strong>
-        </div>
-
-        <div class="metric">
-          <span>??</span>
-          <small>People</small>
-          <strong>7</strong>
-        </div>
-
-        <div class="metric">
-          <span>??</span>
-          <small>Vehicles</small>
-          <strong>4</strong>
-        </div>
-
-        <div class="metric">
-          <span>??</span>
-          <small>Packages</small>
-          <strong>0</strong>
+          <span>⏳</span>
+          <small>Loading</small>
+          <strong>---</strong>
         </div>
       </div>
 
-      <div class="summary-foot">
-        <span>2 family members home</span>
-        <span>�</span>
-        <span>2 cameras</span>
-        <span style="margin-left:auto" class="live">? LIVE</span>
+      <div class="summary-foot" id="summary-foot">
+        <span>Loading security status...</span>
+        <span style="margin-left:auto" class="live">● LIVE</span>
       </div>
     </section>
 
     <section class="lights-card card">
       <div class="card-head">
-        <h2>?? Lights</h2>
+        <h2>💡 Lights</h2>
       </div>
 
       <div class="lights-grid">
         <button class="light-tile">
-          <span>??</span>
+          <span>💡</span>
           <strong>Front Lights</strong>
           <small>On</small>
           <i></i>
         </button>
 
         <button class="light-tile">
-          <span>??</span>
+          <span>💡</span>
           <strong>Garage Lights</strong>
           <small>On</small>
           <i></i>
@@ -122,12 +95,12 @@
 
     <section class="family-card card">
       <div class="card-head">
-        <h2>?? Family</h2>
+        <h2>👥 Family</h2>
       </div>
 
       <div class="family-list" id="family-list">
         <div class="person">
-          <span class="avatar">?</span>
+          <span class="avatar">⏳</span>
           <div>
             <strong>Loading family...</strong>
             <p>Waiting for Home Assistant</p>
@@ -139,12 +112,12 @@
 
     <section class="visitors-card card">
       <div class="card-head">
-        <h2>?? Visitors</h2>
+        <h2>👥 Visitors</h2>
       </div>
 
       <div class="visitor-body">
         <div>
-          <span>??</span>
+          <span>👥</span>
           <strong>0</strong>
           <p>No active visitors</p>
         </div>
@@ -153,70 +126,19 @@
 
     <section class="events-card card">
       <div class="card-head">
-        <h2>?? Recent Events</h2>
-        <a>View All Events �</a>
+        <h2>🕘 Recent Events</h2>
+        <a>View All Events ›</a>
       </div>
-
-      <div class="event-row">
-        <article class="event">
-          <img>
-          <div>
-            <strong>13:49</strong>
-            <p>?? Person</p>
-            <small>Front Camera</small>
-          </div>
-        </article>
-
-        <article class="event">
-          <img>
-          <div>
-            <strong>13:47</strong>
-            <p>?? Person</p>
-            <small>Front Camera</small>
-          </div>
-        </article>
-
-        <article class="event">
-          <img>
-          <div>
-            <strong>13:45</strong>
-            <p>?? Person</p>
-            <small>Front Camera</small>
-          </div>
-        </article>
-
-        <article class="event">
-          <img>
-          <div>
-            <strong>13:44</strong>
-            <p>?? Vehicle</p>
-            <small>Front Camera</small>
-          </div>
-        </article>
-
-        <article class="event">
-          <img>
-          <div>
-            <strong>13:42</strong>
-            <p>?? Person</p>
-            <small>Front Door</small>
-          </div>
-        </article>
-
-        <article class="event">
-          <img>
-          <div>
-            <strong>13:40</strong>
-            <p>?? Person</p>
-            <small>Front Camera</small>
-          </div>
-        </article>
-      </div>
+      <div class="event-row" id="event-row">
+    </div>
     </section>
 
   </main>
 
-  <script src="/js/family.js"></script>
+  <script src="/js/events.js"></script>
   <script src="/js/app.js"></script>
+  <script src="/js/family.js"></script>
+  <script src="/js/weather.js"></script>
+  <script src="/js/summary.js"></script>
 </body>
 </html>
