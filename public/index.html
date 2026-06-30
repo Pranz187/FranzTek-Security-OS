@@ -1,29 +1,222 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>FranzTek Security OS</title>
-<style>
-:root{--bg:#061018;--panel:rgba(10,26,40,.88);--panel2:rgba(8,22,34,.94);--line:rgba(76,145,194,.24);--text:#f3f8ff;--muted:#a7b7c9;--blue:#1687ff;--green:#35f268;--orange:#ff9418;--purple:#a855f7;--gap:14px;--radius:18px}*{box-sizing:border-box}html,body{height:100%;margin:0}body{background:radial-gradient(circle at 50% 0,#102436 0,#061018 46%,#03090f 100%);color:var(--text);font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;overflow:hidden}.app{height:100vh;padding:16px;display:grid;gap:var(--gap);grid-template-columns:400px minmax(560px,1fr) 390px;grid-template-rows:105px 430px 250px 1fr;grid-template-areas:"brand cameras weather" "summary cameras family" "lights cameras visitors" "events events events"}.card{background:linear-gradient(180deg,var(--panel),rgba(5,18,28,.86));border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 18px 55px rgba(0,0,0,.32);overflow:hidden;min-width:0;min-height:0}.card-head{height:50px;display:flex;align-items:center;justify-content:space-between;padding:0 20px}.card-head h2{margin:0;font-size:20px;letter-spacing:-.02em}.live{color:var(--green);font-weight:900}.brand-card{grid-area:brand;display:flex;align-items:center;gap:18px;padding:18px}.logo{width:62px;height:62px;border-radius:16px;display:grid;place-items:center;font-size:32px;font-weight:950;background:linear-gradient(135deg,#0398ff,#a855f7)}h1{font-size:28px;margin:0;letter-spacing:-.04em}.brand-card p{margin:4px 0 0;color:var(--muted);font-size:17px}.weather-clock{grid-area:weather;display:grid;grid-template-columns:1fr 1fr;align-items:center}.weather-block,.clock-block{height:100%;display:flex;align-items:center;justify-content:center;gap:14px;padding:14px}.weather-icon{font-size:50px}.weather-block strong{font-size:28px}.weather-block p,.clock-block p{margin:3px 0 0;color:var(--text)}.weather-block small{color:var(--muted)}.clock-block{border-left:1px solid var(--line);display:block;text-align:center;padding-top:22px}.clock-block strong{font-size:46px;line-height:1}.camera-stack{grid-area:cameras;display:grid;grid-template-rows:1.45fr 1fr;gap:var(--gap)}.camera-card img{display:block;width:100%;height:calc(100% - 50px);object-fit:cover;background:#02070c}.summary-card{grid-area:summary}.summary-grid{height:calc(100% - 92px);padding:12px 18px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:12px}.metric{border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.035);border-radius:14px;display:grid;place-items:center;text-align:center;padding:8px}.metric span{font-size:40px}.metric small{font-size:15px}.metric strong{font-size:34px;color:var(--blue)}.metric:nth-child(3) strong{color:var(--green)}.metric:nth-child(4) strong{color:var(--orange)}.metric:nth-child(5) strong{color:var(--purple)}.summary-foot{height:42px;padding:0 20px;display:flex;align-items:center;gap:12px}.lights-card{grid-area:lights}.lights-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:10px 16px 16px}.light-tile{border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.035);border-radius:14px;color:var(--text);padding:14px;display:grid;grid-template-columns:42px 1fr;grid-template-areas:"icon name" "icon state" "toggle toggle";gap:4px;text-align:left}.light-tile span{grid-area:icon;font-size:34px}.light-tile strong{grid-area:name}.light-tile small{grid-area:state;color:var(--green)}.light-tile i{grid-area:toggle;justify-self:end;width:50px;height:28px;background:var(--blue);border-radius:999px;position:relative}.light-tile i:after{content:"";position:absolute;right:3px;top:3px;width:22px;height:22px;background:white;border-radius:50%}.family-card{grid-area:family}.family-list{padding:8px 24px 18px;display:grid;gap:0}.person{display:grid;grid-template-columns:58px 1fr auto;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.055)}.person:last-child{border-bottom:0}.avatar{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);font-size:32px}.person strong{font-size:20px}.person p{margin:4px 0 0;color:var(--muted);font-size:16px}.person b{color:var(--green);font-size:17px}.visitors-card{grid-area:visitors}.visitor-body{height:calc(100% - 58px);display:grid;place-items:center;text-align:center}.visitor-body span{font-size:62px}.visitor-body strong{font-size:58px;color:var(--blue);line-height:.8}.visitor-body p{margin:0 0 20px}.events-card{grid-area:events}.events-card .card-head a{color:var(--blue);text-decoration:none;font-size:19px}.event-row{height:calc(100% - 56px);padding:0 16px 16px;display:grid;grid-template-columns:repeat(6,minmax(170px,1fr));gap:14px}.event{display:grid;grid-template-columns:110px 1fr;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.035);border-radius:14px;overflow:hidden}.event img{width:110px;height:100%;object-fit:cover;background:#05111c}.event div{padding:12px}.event strong{font-size:22px}.event p{margin:8px 0}.event small{color:var(--muted)}@media(max-width:1300px){body{overflow:auto}.app{height:auto;grid-template-columns:1fr;grid-template-rows:auto;grid-template-areas:"brand" "weather" "cameras" "summary" "lights" "family" "visitors" "events"}.camera-stack{min-height:650px}.event-row{grid-template-columns:repeat(2,1fr)}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FranzTek Security OS</title>
+
+  <link rel="stylesheet" href="/css/dashboard.css" />
 </head>
+
 <body>
-<main class="app">
-<section class="brand-card card"><div class="logo">F</div><div><h1>FranzTek Security OS</h1><p>v0.6.0 · Smart Security</p></div></section>
-<section class="camera-stack"><article class="camera-card card"><div class="card-head"><h2>Front Camera</h2><span class="live">● LIVE</span></div><img id="front-camera" alt="Front Camera"></article><article class="camera-card card"><div class="card-head"><h2>Front Door</h2><span class="live">● LIVE</span></div><img id="doorbell-camera" alt="Front Door"></article></section>
-<section class="weather-clock card"><div class="weather-block"><div class="weather-icon">🌤️</div><div><strong id="weather-temp">14.6°C</strong><p>Partly cloudy</p><small>H: 16.8° &nbsp; L: 9.7°</small></div></div><div class="clock-block"><strong id="clock">--:--</strong><p id="date">---</p></div></section>
-<section class="summary-card card"><div class="card-head"><h2>🛡️ Security Summary</h2></div><div class="summary-grid"><div class="metric"><span>🏠</span><small>Family Home</small><strong>Home</strong></div><div class="metric"><span>🗓️</span><small>Events</small><strong>12</strong></div><div class="metric"><span>👥</span><small>People</small><strong>7</strong></div><div class="metric"><span>🚗</span><small>Vehicles</small><strong>4</strong></div><div class="metric"><span>📦</span><small>Packages</small><strong>0</strong></div></div><div class="summary-foot"><span>2 family members home</span><span>•</span><span>2 cameras</span><span style="margin-left:auto" class="live">● LIVE</span></div></section>
-<section class="lights-card card"><div class="card-head"><h2>💡 Lights</h2></div><div class="lights-grid"><button class="light-tile"><span>💡</span><strong>Front Lights</strong><small>On</small><i></i></button><button class="light-tile"><span>💡</span><strong>Garage Lights</strong><small>On</small><i></i></button></div></section>
-<section class="family-card card"><div class="card-head"><h2>👥 Family</h2></div><div class="family-list"><div class="person"><span class="avatar">👨</span><div><strong>Franz</strong><p>🔋 44% · S26 Ultra</p></div><b>Home</b></div><div class="person"><span class="avatar">👩</span><div><strong>Kat</strong><p>🔋 33% · Fold</p></div><b>Home</b></div><div class="person"><span class="avatar">👵</span><div><strong>Rita</strong><p>🔋 78% · Rita Phone</p></div><b>Home</b></div><div class="person"><span class="avatar">👴</span><div><strong>Nick</strong><p>▱ —<br>Phone not set up</p></div><b>Home</b></div></div></section>
-<section class="visitors-card card"><div class="card-head"><h2>👥 Visitors</h2></div><div class="visitor-body"><div><span>👥</span><strong>0</strong><p>No active visitors</p></div></div></section>
-<section class="events-card card"><div class="card-head"><h2>🕘 Recent Events</h2><a>View All Events ›</a></div><div class="event-row"><article class="event"><img><div><strong>13:49</strong><p>👤 Person</p><small>Front Camera</small></div></article><article class="event"><img><div><strong>13:47</strong><p>👤 Person</p><small>Front Camera</small></div></article><article class="event"><img><div><strong>13:45</strong><p>👤 Person</p><small>Front Camera</small></div></article><article class="event"><img><div><strong>13:44</strong><p>🚗 Vehicle</p><small>Front Camera</small></div></article><article class="event"><img><div><strong>13:42</strong><p>👤 Person</p><small>Front Door</small></div></article><article class="event"><img><div><strong>13:40</strong><p>👤 Person</p><small>Front Camera</small></div></article></div></section>
-</main>
-<script>
-const CAMERA_URLS={front:['/api/front/latest.jpg','/api/frigate/front/latest.jpg','http://192.168.5.84:5000/api/front/latest.jpg'],doorbell:['/api/front_doorbell/latest.jpg','/api/frigate/front_doorbell/latest.jpg','http://192.168.5.84:5000/api/front_doorbell/latest.jpg']};
-function setClock(){const n=new Date();clock.textContent=n.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});date.textContent=n.toLocaleDateString([], {weekday:'long',day:'numeric',month:'long'});}setClock();setInterval(setClock,1000);
-function cycleImage(id, urls){const img=document.getElementById(id);let i=0;function load(){img.src=urls[i]+'?t='+Date.now();}img.onerror=()=>{i=(i+1)%urls.length;if(i===0) img.style.opacity=.25; else load();};load();setInterval(load,2000);}cycleImage('front-camera',CAMERA_URLS.front);cycleImage('doorbell-camera',CAMERA_URLS.doorbell);
-document.querySelectorAll('.light-tile').forEach(btn=>btn.onclick=()=>{let s=btn.querySelector('small'), on=s.textContent==='On';s.textContent=on?'Off':'On';s.style.color=on?'#a7b7c9':'var(--green)';btn.querySelector('i').style.background=on?'#344152':'var(--blue)';});
-</script>
+  <main class="app">
+
+    <section class="brand-card card">
+      <div class="logo">F</div>
+      <div>
+        <h1>FranzTek Security OS</h1>
+        <p>v0.6.0 � Smart Security</p>
+      </div>
+    </section>
+
+    <section class="camera-stack">
+      <article class="camera-card card">
+        <div class="card-head">
+          <h2>Front Camera</h2>
+          <span class="live">? LIVE</span>
+        </div>
+        <img id="front-camera" alt="Front Camera">
+      </article>
+
+      <article class="camera-card card">
+        <div class="card-head">
+          <h2>Front Door</h2>
+          <span class="live">? LIVE</span>
+        </div>
+        <img id="doorbell-camera" alt="Front Door">
+      </article>
+    </section>
+
+    <section class="weather-clock card">
+      <div class="weather-block">
+        <div class="weather-icon">???</div>
+        <div>
+          <strong id="weather-temp">14.6�C</strong>
+          <p>Partly cloudy</p>
+          <small>H: 16.8� &nbsp; L: 9.7�</small>
+        </div>
+      </div>
+
+      <div class="clock-block">
+        <strong id="clock">--:--</strong>
+        <p id="date">---</p>
+      </div>
+    </section>
+
+    <section class="summary-card card">
+      <div class="card-head">
+        <h2>??? Security Summary</h2>
+      </div>
+
+      <div class="summary-grid">
+        <div class="metric">
+          <span>??</span>
+          <small>Family Home</small>
+          <strong>Home</strong>
+        </div>
+
+        <div class="metric">
+          <span>???</span>
+          <small>Events</small>
+          <strong>12</strong>
+        </div>
+
+        <div class="metric">
+          <span>??</span>
+          <small>People</small>
+          <strong>7</strong>
+        </div>
+
+        <div class="metric">
+          <span>??</span>
+          <small>Vehicles</small>
+          <strong>4</strong>
+        </div>
+
+        <div class="metric">
+          <span>??</span>
+          <small>Packages</small>
+          <strong>0</strong>
+        </div>
+      </div>
+
+      <div class="summary-foot">
+        <span>2 family members home</span>
+        <span>�</span>
+        <span>2 cameras</span>
+        <span style="margin-left:auto" class="live">? LIVE</span>
+      </div>
+    </section>
+
+    <section class="lights-card card">
+      <div class="card-head">
+        <h2>?? Lights</h2>
+      </div>
+
+      <div class="lights-grid">
+        <button class="light-tile">
+          <span>??</span>
+          <strong>Front Lights</strong>
+          <small>On</small>
+          <i></i>
+        </button>
+
+        <button class="light-tile">
+          <span>??</span>
+          <strong>Garage Lights</strong>
+          <small>On</small>
+          <i></i>
+        </button>
+      </div>
+    </section>
+
+    <section class="family-card card">
+      <div class="card-head">
+        <h2>?? Family</h2>
+      </div>
+
+      <div class="family-list" id="family-list">
+        <div class="person">
+          <span class="avatar">?</span>
+          <div>
+            <strong>Loading family...</strong>
+            <p>Waiting for Home Assistant</p>
+          </div>
+          <b>---</b>
+        </div>
+      </div>
+    </section>
+
+    <section class="visitors-card card">
+      <div class="card-head">
+        <h2>?? Visitors</h2>
+      </div>
+
+      <div class="visitor-body">
+        <div>
+          <span>??</span>
+          <strong>0</strong>
+          <p>No active visitors</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="events-card card">
+      <div class="card-head">
+        <h2>?? Recent Events</h2>
+        <a>View All Events �</a>
+      </div>
+
+      <div class="event-row">
+        <article class="event">
+          <img>
+          <div>
+            <strong>13:49</strong>
+            <p>?? Person</p>
+            <small>Front Camera</small>
+          </div>
+        </article>
+
+        <article class="event">
+          <img>
+          <div>
+            <strong>13:47</strong>
+            <p>?? Person</p>
+            <small>Front Camera</small>
+          </div>
+        </article>
+
+        <article class="event">
+          <img>
+          <div>
+            <strong>13:45</strong>
+            <p>?? Person</p>
+            <small>Front Camera</small>
+          </div>
+        </article>
+
+        <article class="event">
+          <img>
+          <div>
+            <strong>13:44</strong>
+            <p>?? Vehicle</p>
+            <small>Front Camera</small>
+          </div>
+        </article>
+
+        <article class="event">
+          <img>
+          <div>
+            <strong>13:42</strong>
+            <p>?? Person</p>
+            <small>Front Door</small>
+          </div>
+        </article>
+
+        <article class="event">
+          <img>
+          <div>
+            <strong>13:40</strong>
+            <p>?? Person</p>
+            <small>Front Camera</small>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/js/family.js"></script>
+  <script src="/js/app.js"></script>
 </body>
 </html>

@@ -1,37 +1,84 @@
-# FranzTek Security OS v0.5.0
+# FranzTek Security OS
 
-## Smart Security
+<p align="center">
+  <img src="public/images/logo/franztek.png" width="180">
+</p>
 
-### Added
+<h3 align="center">
+AI Powered Home Security Dashboard
+</h3>
 
-- Large primary camera layout.
-- Auto-discovered Frigate cameras.
-- Snapshot-based event cards.
-- Known plate / vehicle labels when available.
-- Improved timeline layout.
-- Better security summary.
+<p align="center">
+Built for Home Assistant • Frigate • AI Detection
+</p>
 
-## Upgrade
+---
 
-Copy your old `.env` into this folder.
+## Features
 
-Then:
+- 📷 Live Frigate Cameras
+- 👨‍👩‍👧 Family Presence
+- 🚗 Vehicle Recognition
+- 🔤 License Plate Recognition
+- 😀 Face Recognition
+- 📦 Package Detection
+- 🌦 Weather
+- 💡 Smart Lighting
+- 📜 AI Event Timeline
+- 🏠 Home Assistant Integration
 
-```cmd
+---
+
+## Screenshots
+
+Coming soon...
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/Pranz187/FranzTek-Security-OS.git
+
+cd FranzTek-Security-OS
+
 npm install
+
 npm start
 ```
 
-Open:
+Open
 
-```text
-http://localhost:8088
-```
+http://localhost:3000
 
-## Push to GitHub
+---
 
-```cmd
-git add .
-git commit -m "Add v0.5.0 smart security event cards"
-git push
-```
+## Roadmap
+
+### Version 0.6
+- Project Cleanup ✅
+- Live Dashboard
+- Home Assistant Integration
+
+### Version 0.7
+- Frigate AI
+- Timeline
+- Camera Improvements
+
+### Version 0.8
+- Settings
+- Themes
+- Mobile Support
+
+### Version 0.9
+- Installer
+- Multi Dashboard
+
+### Version 1.0
+First Public Release
+
+---
+
+## License
+
+MIT License
