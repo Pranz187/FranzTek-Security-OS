@@ -77,5 +77,6 @@ async function loadEvents() {
     }
 }
 
-loadEvents();
-setInterval(loadEvents, 7000);
+window.addEventListener("snapshot", (e) => {
+    renderEvents(e.detail);
+});
