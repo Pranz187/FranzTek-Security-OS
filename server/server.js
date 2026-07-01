@@ -7,6 +7,8 @@ const config = require("../config/config");
 const ha = require("./api/homeassistant");
 const frigate = require("./api/frigate");
 
+const VERSION = "0.7.1";
+
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
@@ -96,7 +98,7 @@ async function buildSnapshot() {
   const knownPlates = await frigate.getKnownPlates();
 
   const snapshot = {
-    version: "0.6.0",
+    version: VERSION,
     time: new Date().toISOString(),
     config: {
       family: appConfig.family || [],
@@ -104,6 +106,7 @@ async function buildSnapshot() {
       quickButtons: appConfig.quickButtons || {},
       weatherEntity: config.weatherEntity,
       frigateConfigured: Boolean(config.frigateUrl),
+      cameraMode: config.cameraMode || "direct-mjpeg",
       knownPlates
     },
     states: {},
@@ -171,6 +174,14 @@ app.get("/api/frigate/cameras", async (req, res) => {
   res.json(await frigate.discoverCameras());
 });
 
+app.get("/api/client-config", (req, res) => {
+  res.json({
+    version: VERSION,
+    cameraMode: config.cameraMode || "direct-mjpeg",
+    frigatePublicUrl: config.frigatePublicUrl || config.frigateUrl || ""
+  });
+});
+
 app.post("/api/ha/button/:entity/press", async (req, res) => {
   try {
     const result = await ha.callService("button", "press", req.params.entity);
@@ -204,7 +215,9 @@ app.get("/api/frigate/camera/:camera/mjpeg", async (req, res) => {
   }
 
   const camera = encodeURIComponent(req.params.camera);
-  const url = `${frigate.frigateBase()}/api/${camera}?h=720`;
+  const height = Number(req.query.h || 480);
+  const safeHeight = Math.min(Math.max(height, 240), 1080);
+  const url = `${frigate.frigateBase()}/api/${camera}?h=${safeHeight}`;
 
   try {
     const upstream = await fetch(url);
@@ -271,7 +284,7 @@ app.get("/api/frigate/event/:eventId/clip", (req, res) => {
 });
 
 app.get("/health", (req, res) => {
-  res.json({ ok: true, version: "0.6.0" });
+  res.json({ ok: true, version: VERSION });
 });
 
 wss.on("connection", async (ws) => {
@@ -288,6 +301,6 @@ setInterval(async () => {
 
 server.listen(config.port, () => {
   console.log(
-    `FranzTek Security OS v0.6.0 running at http://localhost:${config.port}`
+    `FranzTek Security OS v${VERSION} running at http://localhost:${config.port}`
   );
 });

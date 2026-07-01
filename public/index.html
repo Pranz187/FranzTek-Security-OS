@@ -5,133 +5,126 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FranzTek Security OS</title>
   <link rel="stylesheet" href="/css/dashboard.css" />
+  <link rel="stylesheet" href="/css/family.css" />
+  <link rel="stylesheet" href="/css/events.css" />
 </head>
 
 <body>
   <main class="app">
 
-    <section class="brand-card card">
-      <div class="logo">F</div>
-      <div>
-        <h1>FranzTek Security OS</h1>
-        <p>v0.6.0 · Smart Security</p>
-      </div>
-    </section>
-
-    <section class="camera-stack">
-      <article class="camera-card card">
-        <div class="card-head">
-          <h2>Front Camera</h2>
-          <span class="live">● LIVE</span>
-        </div>
-        <img id="front-camera" alt="Front Camera">
-      </article>
-
-      <article class="camera-card card">
-        <div class="card-head">
-          <h2>Front Door</h2>
-          <span class="live">● LIVE</span>
-        </div>
-        <img id="doorbell-camera" alt="Front Door">
-      </article>
-    </section>
-
-    <section class="weather-clock card">
-      <div class="weather-block">
-        <div class="weather-icon" id="weather-icon">🌤️</div>
+    <div class="left-column">
+      <section class="brand-card card">
+        <div class="logo">F</div>
         <div>
-          <strong id="weather-temp">--°C</strong>
-          <p id="weather-condition">Loading...</p>
-          <small id="weather-extra"></small>
+          <h1>FranzTek Security OS</h1>
+          <p>v0.7.1 · Smart Security</p>
         </div>
-      </div>
+      </section>
 
-      <div class="clock-block">
-        <strong id="clock">--:--</strong>
-        <p id="date">---</p>
-      </div>
-    </section>
-
-    <section class="summary-card card">
-      <div class="card-head">
-        <h2>🛡️ Security Summary</h2>
-      </div>
-
-      <div class="summary-grid" id="summary-grid">
-        <div class="metric">
-          <span>⏳</span>
-          <small>Loading</small>
-          <strong>---</strong>
+      <section class="summary-card card">
+        <div class="card-head">
+          <h2>🛡️ Security Summary</h2>
         </div>
-      </div>
 
-      <div class="summary-foot" id="summary-foot">
-        <span>Loading security status...</span>
-        <span style="margin-left:auto" class="live">● LIVE</span>
-      </div>
-    </section>
-
-    <section class="lights-card card">
-      <div class="card-head">
-        <h2>💡 Lights</h2>
-      </div>
-
-      <div class="lights-grid">
-        <button class="light-tile">
-          <span>💡</span>
-          <strong>Front Lights</strong>
-          <small>On</small>
-          <i></i>
-        </button>
-
-        <button class="light-tile">
-          <span>💡</span>
-          <strong>Garage Lights</strong>
-          <small>On</small>
-          <i></i>
-        </button>
-      </div>
-    </section>
-
-    <section class="family-card card">
-      <div class="card-head">
-        <h2>👥 Family</h2>
-      </div>
-
-      <div class="family-list" id="family-list">
-        <div class="person">
-          <span class="avatar">⏳</span>
-          <div>
-            <strong>Loading family...</strong>
-            <p>Waiting for Home Assistant</p>
+        <div class="summary-grid" id="summary-grid">
+          <div class="metric">
+            <span>⏳</span>
+            <small>Loading</small>
+            <strong>---</strong>
           </div>
-          <b>---</b>
         </div>
-      </div>
-    </section>
 
-    <section class="visitors-card card">
-      <div class="card-head">
-        <h2>👥 Visitors</h2>
-      </div>
-
-      <div class="visitor-body">
-        <div>
-          <span>👥</span>
-          <strong>0</strong>
-          <p>No active visitors</p>
+        <div class="summary-foot" id="summary-foot">
+          <span>Loading security status...</span>
+          <span style="margin-left:auto" class="live">● LIVE</span>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="events-card card">
-      <div class="card-head">
-        <h2>🕘 Recent Events</h2>
-        <a>View All Events ›</a>
-      </div>
-      <div class="event-row" id="event-row">
+      <section class="lights-card card">
+        <div class="card-head">
+          <h2>💡 Lights</h2>
+        </div>
+
+        <div class="lights-grid">
+          <button class="light-tile">
+            <span>💡</span>
+            <strong>Front Lights</strong>
+            <small>On</small>
+            <i></i>
+          </button>
+
+          <button class="light-tile">
+            <span>💡</span>
+            <strong>Garage Lights</strong>
+            <small>On</small>
+            <i></i>
+          </button>
+        </div>
+      </section>
     </div>
-    </section>
+
+    <div class="center-column">
+      <section class="camera-stack">
+        <article class="camera-card card">
+          <div class="card-head">
+            <h2>Front Camera</h2>
+            <span class="live">● LIVE</span>
+          </div>
+          <img id="front-camera" alt="Front Camera">
+        </article>
+
+        <article class="camera-card card">
+          <div class="card-head">
+            <h2>Front Door</h2>
+            <span class="live">● LIVE</span>
+          </div>
+          <img id="doorbell-camera" alt="Front Door">
+        </article>
+      </section>
+    </div>
+
+    <div class="right-column">
+      <section class="weather-clock card">
+        <div class="weather-block">
+          <div class="weather-icon" id="weather-icon">🌤️</div>
+          <div>
+            <strong id="weather-temp">--°C</strong>
+            <p id="weather-condition">Loading...</p>
+            <small id="weather-extra"></small>
+          </div>
+        </div>
+
+        <div class="clock-block">
+          <strong id="clock">--:--</strong>
+          <p id="date">---</p>
+        </div>
+      </section>
+
+      <section class="family-card card">
+        <div class="card-head">
+          <h2>👥 Family</h2>
+        </div>
+
+        <div class="family-list" id="family-list">
+          <div class="person">
+            <span class="avatar">⏳</span>
+            <div>
+              <strong>Loading family...</strong>
+              <p>Waiting for Home Assistant</p>
+            </div>
+            <b>---</b>
+          </div>
+        </div>
+      </section>
+
+      <section class="events-card card">
+        <div class="card-head">
+          <h2>🕘 Recent Events</h2>
+          <a>View All Events ›</a>
+        </div>
+        <div class="event-row" id="event-row"></div>
+      </section>
+    </div>
 
   </main>
 

@@ -1,6 +1,6 @@
-const CAMERA_URLS = {
-  front: "/api/frigate/camera/front/mjpeg",
-  doorbell: "/api/frigate/camera/front_doorbell/mjpeg"
+const DEFAULT_CAMERAS = {
+  front: "front",
+  doorbell: "front_doorbell"
 };
 
 const LIGHTS = [
@@ -31,15 +31,56 @@ function setClock() {
     });
 }
 
-function setupCamera(id, url) {
+async function getClientConfig() {
+  try {
+    const response = await fetch("/api/client-config");
+    if (!response.ok) throw new Error("client config unavailable");
+    return response.json();
+  } catch (error) {
+    console.warn("Using fallback camera configuration:", error.message);
+    return { frigatePublicUrl: "", cameraMode: "proxy-mjpeg" };
+  }
+}
+
+function directFrigateMjpegUrl(baseUrl, camera, height = 720) {
+  return `${baseUrl.replace(/\/$/, "")}/api/${encodeURIComponent(camera)}?h=${height}`;
+}
+
+function proxyMjpegUrl(camera, height = 480) {
+  return `/api/frigate/camera/${encodeURIComponent(camera)}/mjpeg?h=${height}`;
+}
+
+function setupCamera(id, cameraName, clientConfig) {
   const img = document.getElementById(id);
   if (!img) return;
 
-  img.src = url;
+  const directBase = clientConfig.frigatePublicUrl || "";
+  const useDirect = directBase && clientConfig.cameraMode !== "proxy-mjpeg";
+  const primaryUrl = useDirect
+    ? directFrigateMjpegUrl(directBase, cameraName, 720)
+    : proxyMjpegUrl(cameraName, 480);
+  const fallbackUrl = proxyMjpegUrl(cameraName, 480);
+
+  img.dataset.primaryUrl = primaryUrl;
+  img.dataset.fallbackUrl = fallbackUrl;
+  img.src = primaryUrl;
+  img.style.opacity = "1";
 
   img.onerror = () => {
+    if (img.src !== fallbackUrl) {
+      img.src = fallbackUrl;
+      return;
+    }
+
     img.style.opacity = ".25";
   };
+}
+
+async function setupCameras() {
+  const clientConfig = await getClientConfig();
+
+  setupCamera("front-camera", DEFAULT_CAMERAS.front, clientConfig);
+  setupCamera("doorbell-camera", DEFAULT_CAMERAS.doorbell, clientConfig);
 }
 
 function updateLight(buttonIndex, state) {
@@ -69,50 +110,32 @@ function updateLightsFromSnapshot(snapshot) {
 }
 
 function setupLightButtons() {
-
   document.querySelectorAll(".light-tile").forEach((btn, index) => {
-
     btn.addEventListener("click", async () => {
-
       btn.style.opacity = ".6";
 
       try {
-
         await fetch(
           `/api/ha/light/${LIGHTS[index].entity.replace("light.","")}/toggle`,
-          {
-            method: "POST"
-          }
+          { method: "POST" }
         );
-
-        // WebSocket will update the light state
-
       } catch (err) {
-
         console.error(err);
-
       }
 
       btn.style.opacity = "1";
-
     });
-
   });
-
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-
   setClock();
   setInterval(setClock, 1000);
 
-  setupCamera("front-camera", CAMERA_URLS.front);
-  setupCamera("doorbell-camera", CAMERA_URLS.doorbell);
-
+  setupCameras();
   setupLightButtons();
 
   window.addEventListener("snapshot", (e) => {
     updateLightsFromSnapshot(e.detail);
   });
-
 });

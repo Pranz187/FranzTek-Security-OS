@@ -5,7 +5,7 @@ function eventIcon(e) {
     const label = (e.label || e.eventKind || "").toLowerCase();
 
     if (label.includes("person")) return "😀";
-    if (label.includes("car")) return "🚗";
+    if (label.includes("car") || label.includes("vehicle")) return "🚗";
     if (label.includes("truck")) return "🚚";
     if (label.includes("motorcycle")) return "🏍️";
     if (label.includes("bicycle")) return "🚲";
@@ -17,8 +17,18 @@ function eventIcon(e) {
 }
 
 function eventTitle(e) {
-    const title = e.displayLabel || e.sub_label || e.label || "Unknown";
-    return title.charAt(0).toUpperCase() + title.slice(1);
+    if (e.knownVehicle) return e.knownVehicle;
+    if (e.sub_label) return e.sub_label;
+
+    const type = (e.eventKind || e.label || "").toLowerCase();
+
+    if (["vehicle", "car", "truck"].includes(type)) return "Unknown Vehicle";
+    if (type === "person") return "Unknown Person";
+    if (type === "package") return "Package Delivery";
+    if (type === "dog") return "Dog";
+    if (type === "cat") return "Cat";
+
+    return e.label || "Event";
 }
 
 function cameraName(name) {
@@ -40,6 +50,33 @@ function eventTime(e) {
         hour: "2-digit",
         minute: "2-digit"
     });
+}
+
+function getEventScore(e) {
+    const rawScore =
+        e.score ??
+        e.top_score ??
+        e.data?.top_score ??
+        e.data?.score ??
+        0;
+
+    return rawScore ? Math.round(rawScore * 100) : 0;
+}
+
+function getEventZones(e) {
+    return e.current_zones || e.zones || e.entered_zones || [];
+}
+
+function eventTypeName(e) {
+    const type = (e.eventKind || e.label || "").toLowerCase();
+
+    if (["vehicle", "car", "truck"].includes(type)) return "Vehicle";
+    if (type === "person") return "Person";
+    if (type === "package") return "Package";
+    if (type === "dog") return "Dog";
+    if (type === "cat") return "Cat";
+
+    return e.label || "Event";
 }
 
 function renderEvents(snapshot) {
@@ -92,29 +129,36 @@ function openEvent(id) {
     if (currentEventIndex === -1) return;
 
     const event = currentEvents[currentEventIndex];
+    const confidence = getEventScore(event);
+    const zones = getEventZones(event);
 
     document.getElementById("event-title").textContent =
-        `${eventIcon(event)} ${event.displayLabel || event.label}`;
+        `${eventIcon(event)} ${eventTitle(event)}`;
 
     document.getElementById("event-time").textContent = eventTime(event);
     document.getElementById("event-camera").textContent = cameraName(event.camera);
-    document.getElementById("event-type").textContent = event.eventKind || event.label || "-";
+    document.getElementById("event-type").textContent = eventTypeName(event);
 
-    const confidence = event.score
-        ? Math.round(event.score * 100)
-        : 0;
+    const confidenceText = document.getElementById("event-confidence");
+    const confidenceBar = document.getElementById("event-confidence-bar");
 
-    document.getElementById("event-confidence").textContent =
-        confidence ? `${confidence}%` : "-";
+    confidenceText.textContent = confidence ? `${confidence}%` : "-";
+    confidenceBar.style.width = `${confidence}%`;
+    confidenceBar.className = "";
 
-    document.getElementById("event-confidence-bar").style.width =
-       `${confidence}%`;
+    if (confidence >= 90) {
+        confidenceBar.classList.add("confidence-high");
+    } else if (confidence >= 70) {
+        confidenceBar.classList.add("confidence-medium");
+    } else {
+        confidenceBar.classList.add("confidence-low");
+    }
 
     document.getElementById("event-zone").textContent =
-        event.current_zones?.join(", ") || "-";
+        zones.length ? zones.join(", ") : "No zone";
 
     document.getElementById("event-plate").textContent =
-        event.knownVehicle || event.plate || "-";
+        event.knownVehicle || event.plate || event.sub_label || "-";
 
     const img = document.getElementById("event-image");
     const video = document.getElementById("event-video");
@@ -180,16 +224,23 @@ async function loadEvents() {
     }
 }
 
-window.addEventListener("snapshot", (e) => {
+window.addEventListener("snapshot", e => {
     renderEvents(e.detail);
 });
 
-document.getElementById("event-modal").addEventListener("click", e => {
-    if (e.target.id === "event-modal") closeEvent();
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("event-modal");
+
+    if (modal) {
+        modal.addEventListener("click", e => {
+            if (e.target.id === "event-modal") closeEvent();
+        });
+    }
 });
 
 document.addEventListener("keydown", e => {
-    if (document.getElementById("event-modal").classList.contains("hidden")) return;
+    const modal = document.getElementById("event-modal");
+    if (!modal || modal.classList.contains("hidden")) return;
 
     if (e.key === "Escape") closeEvent();
     if (e.key === "ArrowLeft") previousEvent();

@@ -1,0 +1,27 @@
+.confidence-bar {
+    width: 100%;
+    height: 8px;
+    margin-top: 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.08);
+    overflow: hidden;
+}
+
+.confidence-bar span{
+    display:block;
+    height:100%;
+    width:0%;
+    transition:.3s;
+}
+
+.confidence-high{
+    background:#35f268;
+}
+
+.confidence-medium{
+    background:#ffb020;
+}
+
+.confidence-low{
+    background:#ff5252;
+}

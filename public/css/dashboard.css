@@ -984,3 +984,377 @@ font-weight:700;
 color:white;
 
 }
+/* ==========================
+   RESPONSIVE DASHBOARD SCALE
+   Keeps full dash visible
+   ========================== */
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  padding: clamp(6px, 0.7vw, 12px);
+  gap: clamp(6px, 0.7vw, 14px);
+
+  grid-template-columns:
+    minmax(260px, 20vw)
+    minmax(520px, 1fr)
+    minmax(260px, 19vw);
+
+  grid-template-rows:
+  clamp(92px, 11vh, 120px)
+  1fr
+  clamp(210px, 26vh, 270px);
+}
+
+.card-head {
+  height: clamp(38px, 4.7vh, 50px);
+  padding: 0 clamp(12px, 1vw, 20px);
+}
+
+.card-head h2 {
+  font-size: clamp(15px, 1.05vw, 20px);
+}
+
+h1 {
+  font-size: clamp(18px, 1.5vw, 28px);
+}
+
+.brand-card p {
+  font-size: clamp(12px, 0.9vw, 17px);
+}
+
+.logo {
+  width: clamp(44px, 3.3vw, 62px);
+  height: clamp(44px, 3.3vw, 62px);
+  font-size: clamp(22px, 1.8vw, 32px);
+}
+
+.clock-block strong {
+  font-size: clamp(28px, 2.4vw, 46px);
+}
+
+.weather-icon {
+  font-size: clamp(30px, 2.6vw, 50px);
+}
+
+.weather-block strong {
+  font-size: clamp(18px, 1.5vw, 28px);
+}
+
+.camera-card img {
+  height: calc(100% - clamp(38px, 4.7vh, 50px));
+}
+
+.summary-tile strong {
+  font-size: clamp(20px, 1.7vw, 32px);
+}
+
+.summary-tile span {
+  font-size: clamp(20px, 1.5vw, 28px);
+}
+
+.person {
+  padding: clamp(7px, 1vh, 14px) 0;
+}
+
+.avatar-circle {
+  width: clamp(42px, 3vw, 58px);
+  height: clamp(42px, 3vw, 58px);
+}
+
+.person-top strong {
+  font-size: clamp(15px, 1.05vw, 20px);
+}
+
+.event {
+  min-height: clamp(58px, 7.5vh, 82px);
+  grid-template-columns: clamp(68px, 5vw, 90px) 1fr;
+}
+
+.event img {
+  width: clamp(68px, 5vw, 90px);
+  height: clamp(58px, 7.5vh, 82px);
+}
+
+.event-info strong {
+  font-size: clamp(15px, 1.15vw, 22px);
+}
+
+.event-info p {
+  font-size: clamp(12px, 0.9vw, 16px);
+}
+
+.event-info small {
+  font-size: clamp(11px, 0.8vw, 14px);
+}
+
+.event-dialog {
+  width: min(900px, 94vw);
+  max-height: 94vh;
+}
+
+.event-media {
+  height: clamp(260px, 42vh, 420px);
+}
+
+.event-grid {
+  gap: clamp(8px, 0.8vw, 14px);
+  padding: clamp(12px, 1.2vw, 22px);
+}
+
+.event-header h2 {
+  font-size: clamp(21px, 1.6vw, 30px);
+}
+
+.weather-clock {
+  min-height: 92px;
+}
+
+.clock-block {
+  padding-top: clamp(10px, 1.4vh, 18px);
+  overflow: hidden;
+}
+
+.clock-block strong {
+  font-size: clamp(32px, 2.2vw, 42px);
+  line-height: 1;
+}
+
+.clock-block p {
+  font-size: clamp(12px, .8vw, 15px);
+  margin-top: 4px;
+}
+
+.family-card {
+  align-self: start;
+  min-height: 0;
+}
+
+.family-list {
+  padding-bottom: 10px;
+}
+
+.events-card {
+  min-height: 0;
+}
+/* ==========================
+   v0.7.1 RESPONSIVE LAYOUT ENGINE
+   Three-column console layout. This replaces the old single-grid stretching.
+   ========================== */
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  padding: clamp(8px, 0.7vw, 14px);
+  display: grid;
+  grid-template-columns:
+    clamp(280px, 20vw, 390px)
+    minmax(0, 1fr)
+    clamp(280px, 20vw, 390px);
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: none;
+  gap: clamp(8px, 0.7vw, 14px);
+  overflow: hidden;
+}
+
+.left-column,
+.center-column,
+.right-column {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  gap: clamp(8px, 0.7vw, 14px);
+}
+
+.left-column {
+  grid-template-rows:
+    clamp(88px, 10vh, 116px)
+    minmax(0, 1fr)
+    clamp(170px, 23vh, 250px);
+}
+
+.center-column {
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.right-column {
+  grid-template-rows:
+    clamp(96px, 11vh, 126px)
+    auto
+    minmax(0, 1fr);
+}
+
+.left-column > *,
+.center-column > *,
+.right-column > * {
+  grid-area: auto !important;
+  min-width: 0;
+  min-height: 0;
+}
+
+.camera-stack {
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) minmax(180px, 0.48fr);
+  gap: clamp(8px, 0.7vw, 14px);
+}
+
+.camera-card {
+  min-height: 0;
+}
+
+.camera-card img {
+  width: 100%;
+  height: calc(100% - clamp(38px, 4.7vh, 50px));
+  object-fit: cover;
+}
+
+.brand-card,
+.weather-clock,
+.summary-card,
+.lights-card,
+.family-card,
+.events-card {
+  min-width: 0;
+  min-height: 0;
+}
+
+.family-card {
+  align-self: start;
+  height: auto;
+  max-height: none;
+}
+
+.family-list {
+  padding: clamp(6px, 0.75vh, 10px) clamp(14px, 1.1vw, 22px) clamp(8px, 1vh, 14px);
+  gap: 0;
+}
+
+.family-card .person {
+  padding: clamp(7px, 0.95vh, 12px) 0;
+}
+
+.events-card {
+  align-self: stretch;
+  overflow: hidden;
+}
+
+.events-card .event-row {
+  height: calc(100% - clamp(38px, 4.7vh, 50px));
+  min-height: 0;
+  overflow: hidden;
+  align-content: start;
+}
+
+.summary-grid {
+  min-height: 0;
+}
+
+.summary-v2 {
+  min-height: 0;
+}
+
+.weather-clock {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.weather-block,
+.clock-block {
+  min-width: 0;
+  min-height: 0;
+}
+
+.clock-block {
+  padding-top: clamp(10px, 1.3vh, 18px);
+}
+
+.clock-block strong {
+  font-size: clamp(30px, 2.15vw, 42px);
+  line-height: 1;
+}
+
+.clock-block p {
+  font-size: clamp(11px, 0.78vw, 15px);
+  margin-top: 4px;
+}
+
+.weather-block strong {
+  font-size: clamp(20px, 1.45vw, 28px);
+}
+
+.weather-icon {
+  font-size: clamp(30px, 2.35vw, 48px);
+}
+
+.card-head {
+  height: clamp(38px, 4.7vh, 50px);
+}
+
+@media (max-width: 1200px) {
+  body {
+    overflow: auto;
+  }
+
+  .app {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .left-column,
+  .center-column,
+  .right-column {
+    grid-template-rows: auto;
+  }
+
+  .camera-stack {
+    min-height: 680px;
+  }
+
+  .events-card .event-row {
+    height: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .weather-clock {
+    grid-template-columns: 1fr;
+  }
+
+  .clock-block {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .camera-stack {
+    min-height: 520px;
+  }
+
+  .events-card .event-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+html,
+body {
+  overflow: hidden;
+}
+
+@media (max-width: 1200px) {
+  html,
+  body {
+    overflow: auto;
+  }
+}
