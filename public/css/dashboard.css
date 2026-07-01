@@ -1049,7 +1049,9 @@ h1 {
 }
 
 .camera-card img {
-  height: calc(100% - clamp(38px, 4.7vh, 50px));
+  max-width:100%;
+  max-height:calc(100% - clamp(38px, 4.7vh, 50px));
+  height:auto;
 }
 
 .summary-tile strong {
@@ -1213,7 +1215,9 @@ h1 {
 
 .camera-card img {
   width: 100%;
-  height: calc(100% - clamp(38px, 4.7vh, 50px));
+  max-width:100%;
+  max-height:calc(100% - clamp(38px, 4.7vh, 50px));
+  height:auto;
   object-fit: cover;
 }
 
@@ -1248,7 +1252,9 @@ h1 {
 }
 
 .events-card .event-row {
-  height: calc(100% - clamp(38px, 4.7vh, 50px));
+  max-width:100%;
+  max-height:calc(100% - clamp(38px, 4.7vh, 50px));
+  height:auto;
   min-height: 0;
   overflow: hidden;
   align-content: start;
@@ -1356,5 +1362,115 @@ body {
   html,
   body {
     overflow: auto;
+  }
+}
+
+/* =========================================================
+   Sprint 4 - Native Camera Layout Engine
+   Goal: cameras keep their native Frigate aspect ratio with no crop/stretch.
+   Front camera stays primary, doorbell gets more useful vertical space.
+   ========================================================= */
+
+.center-column {
+  min-height: 0;
+}
+
+.camera-stack {
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(280px, 0.8fr) minmax(430px, 1.2fr);
+  gap: clamp(8px, 0.7vw, 14px);
+}
+
+.camera-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(8,22,34,.96), rgba(0,0,0,.98));
+}
+
+.camera-card .card-head,
+.camera-card .camera-head {
+  display: none !important;
+}
+
+.camera-card {
+  grid-template-rows: 1fr !important;
+}
+
+.camera-card {
+  align-content: center;
+}
+
+.camera-card img,
+.camera-card video,
+.camera-card iframe {
+  margin: 0 auto;
+}
+
+.camera-card img,
+.camera-card video,
+.camera-card iframe {
+  flex: 1 1 auto;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: 100%;
+  object-fit: contain !important;
+  object-position: center center;
+  display:block;
+  background:#000;
+  margin:auto;
+}
+
+/* Direct image streams need an explicit media viewport so contain can scale cleanly. */
+.camera-card img {
+  max-width:100%;
+  max-height:calc(100% - clamp(38px, 4.7vh, 50px));
+  height:auto;
+}
+
+#front-camera,
+#doorbell-camera {
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+/* Keep the front feed large, but give the doorbell the extra height it needs. */
+#doorbell-camera {
+  background: #000;
+}
+
+@media (min-width: 1900px) {
+  .camera-stack {
+    grid-template-rows: minmax(300px, 0.9fr) minmax(390px, 1.1fr);
+  }
+}
+
+@media (max-height: 820px) and (min-width: 1201px) {
+  .camera-stack {
+    grid-template-rows: minmax(220px, 0.95fr) minmax(245px, 1.05fr);
+  }
+
+  .card-head {
+    height: 38px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .camera-stack {
+    height: auto;
+    min-height: 0;
+    grid-template-rows: auto auto;
+  }
+
+  .camera-card img,
+  .camera-card video,
+  .camera-card iframe {
+    height: auto;
+    max-height: none;
+    aspect-ratio: auto;
   }
 }

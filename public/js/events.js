@@ -79,6 +79,28 @@ function eventTypeName(e) {
     return e.label || "Event";
 }
 
+
+function eventAiSummary(e) {
+    const title = eventTitle(e).replace(/^Unknown /, "unknown ");
+    const camera = cameraName(e.camera) || "a camera";
+    const zones = getEventZones(e);
+    const zoneText = zones.length ? ` in ${zones.join(", ")}` : "";
+    const confidence = getEventScore(e);
+    const confidenceText = confidence ? ` with ${confidence}% confidence` : "";
+    const plate = e.knownVehicle || e.plate || null;
+
+    if (plate && eventTypeName(e) === "Vehicle") {
+        return `${plate} was detected by ${camera}${zoneText}${confidenceText}.`;
+    }
+
+    return `${title} was detected by ${camera}${zoneText}${confidenceText}.`;
+}
+
+function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+}
+
 function renderEvents(snapshot) {
     window.latestSnapshot = snapshot;
 
@@ -132,12 +154,13 @@ function openEvent(id) {
     const confidence = getEventScore(event);
     const zones = getEventZones(event);
 
-    document.getElementById("event-title").textContent =
-        `${eventIcon(event)} ${eventTitle(event)}`;
-
-    document.getElementById("event-time").textContent = eventTime(event);
-    document.getElementById("event-camera").textContent = cameraName(event.camera);
-    document.getElementById("event-type").textContent = eventTypeName(event);
+    setText("event-title", `${eventIcon(event)} ${eventTitle(event)}`);
+    setText("event-time", eventTime(event));
+    setText("event-camera", cameraName(event.camera));
+    setText("event-type", eventTypeName(event));
+    setText("event-badge-type", eventTypeName(event));
+    setText("event-badge-confidence", confidence ? `${confidence}% confidence` : "Confidence —");
+    setText("event-ai-summary", eventAiSummary(event));
 
     const confidenceText = document.getElementById("event-confidence");
     const confidenceBar = document.getElementById("event-confidence-bar");
