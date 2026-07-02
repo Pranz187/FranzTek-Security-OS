@@ -1,6 +1,24 @@
+# Dependencies
 node_modules/
+
+# Environment
 .env
-logs/*.log
-.DS_Store
-config/config.local.json
+.env.*
+
+# User configuration
 config/config.json
+
+# Personal photos
+public/images/family/
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

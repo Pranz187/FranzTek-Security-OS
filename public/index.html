@@ -5,136 +5,197 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FranzTek Security OS</title>
   <link rel="stylesheet" href="/css/dashboard.css" />
+  <link rel="stylesheet" href="/css/family.css" />
+  <link rel="stylesheet" href="/css/events.css" />
 </head>
 
 <body>
   <main class="app">
 
-    <section class="brand-card card">
-      <div class="logo">F</div>
-      <div>
-        <h1>FranzTek Security OS</h1>
-        <p>v0.6.0 · Smart Security</p>
-      </div>
-    </section>
-
-    <section class="camera-stack">
-      <article class="camera-card card">
-        <div class="card-head">
-          <h2>Front Camera</h2>
-          <span class="live">● LIVE</span>
-        </div>
-        <img id="front-camera" alt="Front Camera">
-      </article>
-
-      <article class="camera-card card">
-        <div class="card-head">
-          <h2>Front Door</h2>
-          <span class="live">● LIVE</span>
-        </div>
-        <img id="doorbell-camera" alt="Front Door">
-      </article>
-    </section>
-
-    <section class="weather-clock card">
-      <div class="weather-block">
-        <div class="weather-icon" id="weather-icon">🌤️</div>
+    <div class="left-column">
+      <section class="brand-card card">
+        <div class="logo">F</div>
         <div>
-          <strong id="weather-temp">--°C</strong>
-          <p id="weather-condition">Loading...</p>
-          <small id="weather-extra"></small>
+          <h1>FranzTek Security OS</h1>
+          <p>v0.7.5 · Smart Security</p>
         </div>
-      </div>
+      </section>
 
-      <div class="clock-block">
-        <strong id="clock">--:--</strong>
-        <p id="date">---</p>
-      </div>
-    </section>
+      <section class="lights-card card compact-lights-card">
+        <div class="lights-list">
+          <button class="light-tile">
+            <span>💡</span>
+            <div>
+              <strong>Front Lights</strong>
+              <small>On</small>
+            </div>
+            <i></i>
+          </button>
 
-    <section class="summary-card card">
-      <div class="card-head">
-        <h2>🛡️ Security Summary</h2>
-      </div>
-
-      <div class="summary-grid" id="summary-grid">
-        <div class="metric">
-          <span>⏳</span>
-          <small>Loading</small>
-          <strong>---</strong>
+          <button class="light-tile">
+            <span>💡</span>
+            <div>
+              <strong>Garage Lights</strong>
+              <small>Off</small>
+            </div>
+            <i></i>
+          </button>
         </div>
-      </div>
+      </section>
 
-      <div class="summary-foot" id="summary-foot">
-        <span>Loading security status...</span>
-        <span style="margin-left:auto" class="live">● LIVE</span>
-      </div>
-    </section>
-
-    <section class="lights-card card">
-      <div class="card-head">
-        <h2>💡 Lights</h2>
-      </div>
-
-      <div class="lights-grid">
-        <button class="light-tile">
-          <span>💡</span>
-          <strong>Front Lights</strong>
-          <small>On</small>
-          <i></i>
-        </button>
-
-        <button class="light-tile">
-          <span>💡</span>
-          <strong>Garage Lights</strong>
-          <small>On</small>
-          <i></i>
-        </button>
-      </div>
-    </section>
-
-    <section class="family-card card">
-      <div class="card-head">
-        <h2>👥 Family</h2>
-      </div>
-
-      <div class="family-list" id="family-list">
-        <div class="person">
-          <span class="avatar">⏳</span>
-          <div>
-            <strong>Loading family...</strong>
-            <p>Waiting for Home Assistant</p>
-          </div>
-          <b>---</b>
-        </div>
-      </div>
-    </section>
-
-    <section class="visitors-card card">
-      <div class="card-head">
-        <h2>👥 Visitors</h2>
-      </div>
-
-      <div class="visitor-body">
-        <div>
-          <span>👥</span>
-          <strong>0</strong>
-          <p>No active visitors</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="events-card card">
-      <div class="card-head">
-        <h2>🕘 Recent Events</h2>
-        <a>View All Events ›</a>
-      </div>
-      <div class="event-row" id="event-row">
+      <section class="featured-event-card card" id="featured-event-card">
+        <div class="featured-empty">Loading last event...</div>
+      </section>
     </div>
-    </section>
+
+    <div class="center-column">
+      <section class="camera-stack">
+        <article class="camera-card card">
+          <div class="card-head">
+            <h2>Front Camera</h2>
+            <span class="live">● LIVE</span>
+          </div>
+          <img id="front-camera" alt="Front Camera">
+        </article>
+
+        <article class="camera-card card">
+          <div class="card-head">
+            <h2>Front Door</h2>
+            <span class="live">● LIVE</span>
+          </div>
+          <img id="doorbell-camera" alt="Front Door">
+        </article>
+      </section>
+    </div>
+
+    <div class="right-column">
+      <section class="weather-clock card">
+        <div class="weather-block">
+          <div class="weather-icon" id="weather-icon">🌤️</div>
+          <div>
+            <strong id="weather-temp">--°C</strong>
+            <p id="weather-condition">Loading...</p>
+            <small id="weather-extra"></small>
+          </div>
+        </div>
+
+        <div class="clock-block">
+          <strong id="clock">--:--</strong>
+          <p id="date">---</p>
+        </div>
+      </section>
+
+      <section class="family-card card">
+        <div class="card-head">
+          <h2>👥 Family</h2>
+        </div>
+
+        <div class="family-list" id="family-list">
+          <div class="person">
+            <span class="avatar">⏳</span>
+            <div>
+              <strong>Loading family...</strong>
+              <p>Waiting for Home Assistant</p>
+            </div>
+            <b>---</b>
+          </div>
+        </div>
+      </section>
+
+      <section class="events-card card">
+        <div class="card-head">
+          <h2>🕘 Recent Events</h2>
+          <a>View All Events ›</a>
+        </div>
+        <div class="event-row" id="event-row"></div>
+      </section>
+    </div>
 
   </main>
 
+  <!-- Event Details Modal -->
+<div id="event-modal" class="event-modal hidden">
+
+  <div class="event-dialog">
+
+    <button class="event-close" onclick="closeEvent()">
+      ✕
+    </button>
+
+    <div class="event-header">
+      <div>
+        <div class="event-badges">
+          <span id="event-badge-type" class="event-badge">Event</span>
+          <span id="event-badge-confidence" class="event-badge muted">Confidence —</span>
+        </div>
+        <h2 id="event-title">Event</h2>
+      </div>
+      <span id="event-time"></span>
+    </div>
+
+    <div class="event-media">
+  <img id="event-image">
+  <video id="event-video" controls class="hidden"></video>
+</div>
+
+    <div class="event-ai-summary">
+      <small>AI SUMMARY</small>
+      <p id="event-ai-summary">Security event details are loading.</p>
+    </div>
+
+    <div class="event-grid">
+
+      <div>
+        <small>Camera</small>
+        <strong id="event-camera">-</strong>
+      </div>
+
+      <div>
+        <small>Type</small>
+        <strong id="event-type">-</strong>
+      </div>
+
+      <div>
+  <small>Confidence</small>
+  <strong id="event-confidence">-</strong>
+  <div class="confidence-bar">
+    <span id="event-confidence-bar"></span>
+  </div>
+</div>
+
+      <div>
+        <small>Zone</small>
+        <strong id="event-zone">-</strong>
+      </div>
+
+      <div>
+        <small>Plate</small>
+        <strong id="event-plate">-</strong>
+      </div>
+
+    </div>
+
+<div class="event-nav">
+  <button id="event-prev" onclick="previousEvent()">
+    ← Previous
+  </button>
+
+  <span id="event-count"></span>
+
+  <button id="event-next" onclick="nextEvent()">
+    Next →
+  </button>
+</div>
+
+<button id="event-clip">
+  ▶ Play Clip
+</button>
+
+  </div>
+
+</div>
+  
+  <script src="/js/socket.js"></script>
   <script src="/js/events.js"></script>
   <script src="/js/app.js"></script>
   <script src="/js/family.js"></script>

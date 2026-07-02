@@ -1,0 +1,104 @@
+.family-card {
+  grid-area: family;
+  overflow: hidden;
+}
+
+.family-list {
+  padding: 8px 22px 18px;
+  display: grid;
+  gap: 4px;
+}
+
+.person {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  align-items: center;
+}
+
+.person:last-child {
+  border-bottom: none;
+}
+
+.avatar-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-size: 28px;
+  background: linear-gradient(135deg,#1687ff,#6d3cff);
+  box-shadow: 0 0 18px rgba(22,135,255,.28);
+}
+
+.avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.person-main {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.person-top,
+.person-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.person-top strong {
+  font-size: 20px;
+}
+
+.status-badge {
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.status-badge.home {
+  background: rgba(53,242,104,.15);
+  color: #35f268;
+}
+
+.status-badge.away {
+  background: rgba(255,148,24,.15);
+  color: #ff9418;
+}
+
+.status-badge.unknown {
+  background: rgba(255,255,255,.08);
+  color: #c9d5e4;
+}
+
+.family-device {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.battery {
+  font-weight: 800;
+  color: white;
+  font-size: 14px;
+}
+
+.battery.charging {
+  color: #35f268;
+  animation: batteryPulse 1.4s infinite;
+}
+
+@keyframes batteryPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .55; }
+}

@@ -213,7 +213,9 @@ h1 {
 
 .light-tile span { grid-area:icon;font-size:34px; }
 .light-tile strong { grid-area:name; }
-.light-tile small { grid-area:state;color:var(--green); }
+.light-tile small {
+    display: none;
+}
 
 .light-tile i {
   grid-area:toggle;
@@ -244,6 +246,35 @@ h1 {
 .family-list {
   padding:8px 24px 18px;
   display:grid;
+}
+
+.avatar-circle{
+
+width:54px;
+height:54px;
+
+border-radius:50%;
+
+overflow:hidden;
+
+display:grid;
+place-items:center;
+
+background:linear-gradient(135deg,#1687ff,#6d3cff);
+
+font-size:28px;
+
+}
+
+.avatar-circle img{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+display:block;
+
 }
 
 .person {
@@ -505,4 +536,1129 @@ h1 {
 
 .light-tile.on i::after{
   left: 28px;
+}
+.summary-card {
+  overflow: hidden;
+}
+
+.summary-grid {
+  height: calc(100% - 92px);
+  padding: 12px 18px;
+  display: block;
+}
+
+.summary-v2 {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 76px 1fr auto;
+  gap: 12px;
+}
+
+.summary-status {
+  border: 1px solid rgba(255,255,255,.07);
+  background: rgba(255,255,255,.045);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 54px 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.summary-shield {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  background: rgba(53,242,104,.12);
+}
+
+.summary-status strong {
+  display: block;
+  color: var(--green);
+  font-size: 23px;
+  line-height: 1.1;
+}
+
+.summary-status p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.summary-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.summary-tile {
+  border: 1px solid rgba(255,255,255,.07);
+  background: rgba(255,255,255,.04);
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 10px 6px;
+  min-height: 96px;
+}
+
+.summary-tile span {
+  font-size: 28px;
+}
+
+.summary-tile strong {
+  color: var(--blue);
+  font-size: 32px;
+  line-height: 1;
+  margin-top: 4px;
+}
+
+.summary-tile p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.summary-tile small {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.summary-last-event {
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.last-title {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.last-event-row {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.last-event-row img {
+  width: 72px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #05111c;
+}
+
+.last-event-row strong {
+  display: block;
+  font-size: 15px;
+}
+
+.last-event-row p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.last-event-row button {
+  border: 1px solid rgba(22,135,255,.35);
+  background: rgba(22,135,255,.08);
+  color: var(--blue);
+  border-radius: 12px;
+  padding: 8px 10px;
+  font-weight: 800;
+}
+/* ==========================
+   EVENT DETAILS MODAL
+   ========================== */
+
+.event-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.event-modal.hidden {
+  display: none;
+}
+
+.event-dialog {
+  position: relative;
+  width: min(900px, 92vw);
+  max-height: 92vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  background: linear-gradient(180deg, #102235 0%, #09131d 100%);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 22px;
+
+  box-shadow: 0 40px 100px rgba(0,0,0,.6);
+}
+
+.event-nav{
+
+display:flex;
+gap:12px;
+margin:18px 0;
+
+}
+
+.event-nav button{
+
+flex:1;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#1d2b3d;
+color:white;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+transition:.2s;
+
+}
+
+.event-nav button:hover{
+
+background:#2f8ef5;
+
+}
+
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.event-header h2 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.event-header span {
+  color: #9fb4c8;
+}
+
+.event-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255,255,255,.08);
+  color: white;
+
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.event-close:hover {
+  background: rgba(255,255,255,.18);
+}
+
+
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+
+  gap: 14px;
+
+  padding: 22px;
+}
+
+.event-grid > div {
+  background: rgba(255,255,255,.04);
+
+  border: 1px solid rgba(255,255,255,.06);
+
+  border-radius: 14px;
+
+  padding: 12px;
+}
+
+.event-grid small {
+  display: block;
+
+  color: #8ea3b6;
+
+  margin-bottom: 6px;
+}
+
+.event-grid strong {
+  font-size: 18px;
+
+  color: white;
+}
+
+#event-clip {
+  margin: 0 22px 22px;
+
+  height: 54px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #1687ff;
+
+  color: white;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+#event-clip:hover {
+  filter: brightness(1.08);
+}
+
+@media (max-width: 900px) {
+
+  .event-dialog {
+    width: 96vw;
+  }
+
+  #event-image {
+    height: 300px;
+  }
+
+  .event-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .event-header h2 {
+    font-size: 24px;
+  }
+
+}
+.event-media {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  background: #050b10;
+  overflow: hidden;
+}
+
+#event-image,
+#event-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #050b10;
+  display: block;
+}
+
+#event-image.hidden,
+#event-video.hidden {
+  display: none !important;
+}
+.avatar-circle{
+
+width:54px;
+height:54px;
+
+border-radius:50%;
+
+display:grid;
+place-items:center;
+
+font-size:28px;
+
+background:linear-gradient(135deg,#1687ff,#6d3cff);
+
+flex-shrink:0;
+
+}
+
+.person{
+
+display:grid;
+grid-template-columns:60px 1fr;
+
+gap:14px;
+
+padding:14px 0;
+
+border-bottom:1px solid rgba(255,255,255,.06);
+
+align-items:center;
+
+}
+
+.person:last-child{
+
+border-bottom:none;
+
+}
+
+.person-main{
+
+display:flex;
+flex-direction:column;
+gap:8px;
+
+}
+
+.person-top{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+}
+
+.person-bottom{
+
+display:flex;
+justify-content:space-between;
+
+font-size:14px;
+color:var(--muted);
+
+}
+
+.status-badge{
+
+padding:4px 10px;
+
+border-radius:999px;
+
+font-size:12px;
+font-weight:700;
+
+}
+
+.status-badge.home{
+
+background:rgba(53,242,104,.15);
+color:#35f268;
+
+}
+
+.status-badge.away{
+
+background:rgba(255,148,24,.15);
+color:#ff9418;
+
+}
+
+.status-badge.unknown{
+
+background:rgba(255,255,255,.08);
+color:#c9d5e4;
+
+}
+
+.family-device{
+
+color:var(--muted);
+
+}
+
+.battery{
+
+font-weight:700;
+color:white;
+
+}
+/* ==========================
+   RESPONSIVE DASHBOARD SCALE
+   Keeps full dash visible
+   ========================== */
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  padding: clamp(6px, 0.7vw, 12px);
+  gap: clamp(6px, 0.7vw, 14px);
+
+  grid-template-columns:
+    minmax(260px, 20vw)
+    minmax(520px, 1fr)
+    minmax(260px, 19vw);
+
+  grid-template-rows:
+  clamp(92px, 11vh, 120px)
+  1fr
+  clamp(210px, 26vh, 270px);
+}
+
+.card-head {
+  height: clamp(38px, 4.7vh, 50px);
+  padding: 0 clamp(12px, 1vw, 20px);
+}
+
+.card-head h2 {
+  font-size: clamp(15px, 1.05vw, 20px);
+}
+
+h1 {
+  font-size: clamp(18px, 1.5vw, 28px);
+}
+
+.brand-card p {
+  font-size: clamp(12px, 0.9vw, 17px);
+}
+
+.logo {
+  width: clamp(44px, 3.3vw, 62px);
+  height: clamp(44px, 3.3vw, 62px);
+  font-size: clamp(22px, 1.8vw, 32px);
+}
+
+.clock-block strong {
+  font-size: clamp(28px, 2.4vw, 46px);
+}
+
+.weather-icon {
+  font-size: clamp(30px, 2.6vw, 50px);
+}
+
+.weather-block strong {
+  font-size: clamp(18px, 1.5vw, 28px);
+}
+
+.camera-card img {
+  max-width:100%;
+  max-height:calc(100% - clamp(38px, 4.7vh, 50px));
+  height:auto;
+}
+
+.summary-tile strong {
+  font-size: clamp(20px, 1.7vw, 32px);
+}
+
+.summary-tile span {
+  font-size: clamp(20px, 1.5vw, 28px);
+}
+
+.person {
+  padding: clamp(7px, 1vh, 14px) 0;
+}
+
+.avatar-circle {
+  width: clamp(42px, 3vw, 58px);
+  height: clamp(42px, 3vw, 58px);
+}
+
+.person-top strong {
+  font-size: clamp(15px, 1.05vw, 20px);
+}
+
+.event {
+  min-height: clamp(58px, 7.5vh, 82px);
+  grid-template-columns: clamp(68px, 5vw, 90px) 1fr;
+}
+
+.event img {
+  width: clamp(68px, 5vw, 90px);
+  height: clamp(58px, 7.5vh, 82px);
+}
+
+.event-info strong {
+  font-size: clamp(15px, 1.15vw, 22px);
+}
+
+.event-info p {
+  font-size: clamp(12px, 0.9vw, 16px);
+}
+
+.event-info small {
+  font-size: clamp(11px, 0.8vw, 14px);
+}
+
+.event-dialog {
+  width: min(900px, 94vw);
+  max-height: 94vh;
+}
+
+.event-media {
+  height: clamp(260px, 42vh, 420px);
+}
+
+.event-grid {
+  gap: clamp(8px, 0.8vw, 14px);
+  padding: clamp(12px, 1.2vw, 22px);
+}
+
+.event-header h2 {
+  font-size: clamp(21px, 1.6vw, 30px);
+}
+
+.weather-clock {
+  min-height: 92px;
+}
+
+.clock-block {
+  padding-top: clamp(10px, 1.4vh, 18px);
+  overflow: hidden;
+}
+
+.clock-block strong {
+  font-size: clamp(32px, 2.2vw, 42px);
+  line-height: 1;
+}
+
+.clock-block p {
+  font-size: clamp(12px, .8vw, 15px);
+  margin-top: 4px;
+}
+
+.family-card {
+  align-self: start;
+  min-height: 0;
+}
+
+.family-list {
+  padding-bottom: 10px;
+}
+
+.events-card {
+  min-height: 0;
+}
+/* ==========================
+   v0.7.1 RESPONSIVE LAYOUT ENGINE
+   Three-column console layout. This replaces the old single-grid stretching.
+   ========================== */
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  padding: clamp(8px, 0.7vw, 14px);
+  display: grid;
+  grid-template-columns:
+    clamp(280px, 20vw, 390px)
+    minmax(0, 1fr)
+    clamp(280px, 20vw, 390px);
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: none;
+  gap: clamp(8px, 0.7vw, 14px);
+  overflow: hidden;
+}
+
+.left-column,
+.center-column,
+.right-column {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  gap: clamp(8px, 0.7vw, 14px);
+}
+
+.left-column {
+  grid-template-rows:
+    clamp(88px, 10vh, 116px)
+    minmax(0, 1fr)
+    clamp(170px, 23vh, 250px);
+}
+
+.center-column {
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.right-column {
+  grid-template-rows:
+    clamp(96px, 11vh, 126px)
+    auto
+    minmax(0, 1fr);
+}
+
+.left-column > *,
+.center-column > *,
+.right-column > * {
+  grid-area: auto !important;
+  min-width: 0;
+  min-height: 0;
+}
+
+.camera-stack {
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) minmax(180px, 0.48fr);
+  gap: clamp(8px, 0.7vw, 14px);
+}
+
+.camera-card {
+  min-height: 0;
+}
+
+.camera-card img {
+  width: 100%;
+  max-width:100%;
+  max-height:calc(100% - clamp(38px, 4.7vh, 50px));
+  height:auto;
+  object-fit: cover;
+}
+
+.brand-card,
+.weather-clock,
+.summary-card,
+.lights-card,
+.family-card,
+.events-card {
+  min-width: 0;
+  min-height: 0;
+}
+
+.family-card {
+  align-self: start;
+  height: auto;
+  max-height: none;
+}
+
+.family-list {
+  padding: clamp(6px, 0.75vh, 10px) clamp(14px, 1.1vw, 22px) clamp(8px, 1vh, 14px);
+  gap: 0;
+}
+
+.family-card .person {
+  padding: clamp(7px, 0.95vh, 12px) 0;
+}
+
+.events-card {
+  align-self: stretch;
+  overflow: hidden;
+}
+
+.events-card .event-row {
+  max-width:100%;
+  max-height:calc(100% - clamp(38px, 4.7vh, 50px));
+  height:auto;
+  min-height: 0;
+  overflow: hidden;
+  align-content: start;
+}
+
+.summary-grid {
+  min-height: 0;
+}
+
+.summary-v2 {
+  min-height: 0;
+}
+
+.weather-clock {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.weather-block,
+.clock-block {
+  min-width: 0;
+  min-height: 0;
+}
+
+.clock-block {
+  padding-top: clamp(10px, 1.3vh, 18px);
+}
+
+.clock-block strong {
+  font-size: clamp(30px, 2.15vw, 42px);
+  line-height: 1;
+}
+
+.clock-block p {
+  font-size: clamp(11px, 0.78vw, 15px);
+  margin-top: 4px;
+}
+
+.weather-block strong {
+  font-size: clamp(20px, 1.45vw, 28px);
+}
+
+.weather-icon {
+  font-size: clamp(30px, 2.35vw, 48px);
+}
+
+.card-head {
+  height: clamp(38px, 4.7vh, 50px);
+}
+
+@media (max-width: 1200px) {
+  body {
+    overflow: auto;
+  }
+
+  .app {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .left-column,
+  .center-column,
+  .right-column {
+    grid-template-rows: auto;
+  }
+
+  .camera-stack {
+    min-height: 680px;
+  }
+
+  .events-card .event-row {
+    height: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .weather-clock {
+    grid-template-columns: 1fr;
+  }
+
+  .clock-block {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .camera-stack {
+    min-height: 520px;
+  }
+
+  .events-card .event-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+html,
+body {
+  overflow: hidden;
+}
+
+@media (max-width: 1200px) {
+  html,
+  body {
+    overflow: auto;
+  }
+}
+
+/* =========================================================
+   Sprint 4 - Native Camera Layout Engine
+   Goal: cameras keep their native Frigate aspect ratio with no crop/stretch.
+   Front camera stays primary, doorbell gets more useful vertical space.
+   ========================================================= */
+
+.center-column {
+  min-height: 0;
+}
+
+.camera-stack {
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(280px, 0.8fr) minmax(430px, 1.2fr);
+  gap: clamp(8px, 0.7vw, 14px);
+}
+
+.camera-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(8,22,34,.96), rgba(0,0,0,.98));
+}
+
+.camera-card .card-head,
+.camera-card .camera-head {
+  display: none !important;
+}
+
+.camera-card {
+  grid-template-rows: 1fr !important;
+}
+
+.camera-card {
+  align-content: center;
+}
+
+.camera-card img,
+.camera-card video,
+.camera-card iframe {
+  margin: 0 auto;
+}
+
+.camera-card img,
+.camera-card video,
+.camera-card iframe {
+  flex: 1 1 auto;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: 100%;
+  object-fit: contain !important;
+  object-position: center center;
+  display:block;
+  background:#000;
+  margin:auto;
+}
+
+/* Direct image streams need an explicit media viewport so contain can scale cleanly. */
+.camera-card img {
+  max-width:100%;
+  max-height:calc(100% - clamp(38px, 4.7vh, 50px));
+  height:auto;
+}
+
+#front-camera,
+#doorbell-camera {
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+/* Keep the front feed large, but give the doorbell the extra height it needs. */
+#doorbell-camera {
+  background: #000;
+}
+
+@media (min-width: 1900px) {
+  .camera-stack {
+    grid-template-rows: minmax(300px, 0.9fr) minmax(390px, 1.1fr);
+  }
+}
+
+@media (max-height: 820px) and (min-width: 1201px) {
+  .camera-stack {
+    grid-template-rows: minmax(220px, 0.95fr) minmax(245px, 1.05fr);
+  }
+
+  .card-head {
+    height: 38px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .camera-stack {
+    height: auto;
+    min-height: 0;
+    grid-template-rows: auto auto;
+  }
+
+  .camera-card img,
+  .camera-card video,
+  .camera-card iframe {
+    height: auto;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+}
+
+/* ==========================
+   v0.7.5 LEFT COLUMN REBALANCE
+   Keep middle camera section unchanged.
+   ========================== */
+.left-column {
+  grid-template-rows:
+    clamp(88px, 10vh, 116px)
+    clamp(150px, 18vh, 205px)
+    minmax(0, 1fr);
+}
+
+.compact-lights-card {
+  padding: clamp(10px, 1vw, 16px);
+}
+
+.lights-list {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 0;
+}
+
+.lights-list .light-tile {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,.075);
+  background: transparent;
+  border-radius: 0;
+  padding: clamp(8px, 1.1vh, 14px) 0;
+  display: grid;
+  grid-template-columns: clamp(40px, 3vw, 58px) 1fr auto;
+  grid-template-areas: "icon name toggle";
+  align-items: center;
+  gap: clamp(10px, 1vw, 16px);
+}
+
+.lights-list .light-tile:last-child {
+  border-bottom: 0;
+}
+
+.lights-list .light-tile span {
+  grid-area: icon;
+  font-size: clamp(28px, 2.2vw, 42px);
+}
+
+.lights-list .light-tile div {
+  grid-area: name;
+  display: grid;
+  gap: 5px;
+}
+
+.lights-list .light-tile strong {
+  font-size: clamp(15px, 1vw, 18px);
+}
+
+.lights-list .light-tile small {
+  font-size: clamp(13px, .9vw, 16px);
+}
+
+.lights-list .light-tile i {
+  grid-area: toggle;
+  justify-self: end;
+}
+
+.featured-event-card {
+  padding: clamp(14px, 1.15vw, 20px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: clamp(12px, 1vw, 16px);
+}
+
+.featured-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(15px, 1.05vw, 20px);
+  font-weight: 950;
+  letter-spacing: .04em;
+}
+
+.featured-body {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(160px, 1fr) auto auto auto;
+  gap: clamp(10px, 1vh, 14px);
+}
+
+.featured-image-wrap {
+  position: relative;
+  min-height: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #02070c;
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.featured-image-wrap img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.featured-badge {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1687ff, #0067d9);
+  color: #fff;
+  font-weight: 900;
+  font-size: clamp(12px, .8vw, 15px);
+  box-shadow: 0 10px 22px rgba(0,0,0,.35);
+}
+
+.featured-name {
+  min-width: 0;
+}
+
+.featured-name strong {
+  display: block;
+  font-size: clamp(23px, 1.65vw, 32px);
+  line-height: 1.05;
+}
+
+.featured-name p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: clamp(15px, 1vw, 20px);
+}
+
+.featured-chips {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.featured-chip {
+  min-width: 0;
+  border: 1px solid rgba(255,255,255,.07);
+  background: rgba(255,255,255,.035);
+  border-radius: 12px;
+  padding: clamp(9px, .85vw, 14px);
+  display: grid;
+  gap: 4px;
+}
+
+.featured-chip strong {
+  font-size: clamp(14px, .95vw, 17px);
+}
+
+.featured-chip small {
+  color: var(--muted);
+  font-size: clamp(11px, .75vw, 14px);
+}
+
+.featured-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.featured-actions button {
+  min-height: clamp(44px, 5vh, 58px);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.09);
+  background: rgba(255,255,255,.045);
+  color: var(--text);
+  font-weight: 900;
+  font-size: clamp(13px, .9vw, 16px);
+  cursor: pointer;
+}
+
+.featured-actions button:first-child {
+  background: linear-gradient(135deg, rgba(22,135,255,.88), rgba(0,70,160,.88));
+  border-color: rgba(22,135,255,.5);
+}
+
+.featured-empty {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
 }

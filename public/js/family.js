@@ -2,18 +2,45 @@
   return entity && states[entity] ? states[entity].state : null;
 }
 
-function formatPresence(value) {
-  if (!value) return "Unknown";
-  if (value === "home") return "Home";
-  if (value === "not_home") return "Away";
-  return value;
+function statusInfo(state) {
+  if (state === "home") {
+    return { text: "Home", class: "home", icon: "●" };
+  }
+
+  if (state === "not_home") {
+    return { text: "Away", class: "away", icon: "●" };
+  }
+
+  if (!state || state === "unknown" || state === "unavailable") {
+    return { text: "Unknown", class: "unknown", icon: "●" };
+  }
+
+  return {
+    text: state,
+    class: "away",
+    icon: "●"
+  };
 }
 
-function formatAlarm(value) {
-  if (!value || value === "unknown" || value === "unavailable") return "";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "";
-  return `<br>⏰ ${date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+function batteryInfo(level, state) {
+  if (!level || level === "unknown" || level === "unavailable") {
+    return { text: "🔋 —", class: "" };
+  }
+
+  if (state === "charging") {
+    return { text: `⚡ ${level}%`, class: "charging" };
+  }
+
+  if (state === "full") {
+    return { text: `✅ ${level}%`, class: "" };
+  }
+
+  const value = Number(level);
+
+  if (value <= 20) return { text: `🪫 ${level}%`, class: "" };
+  if (value <= 60) return { text: `🔋 ${level}%`, class: "" };
+
+  return { text: `🔋 ${level}%`, class: "" };
 }
 
 function renderFamily(snapshot) {
@@ -23,35 +50,66 @@ function renderFamily(snapshot) {
   const family = snapshot.config?.family || [];
   const states = snapshot.states || {};
 
+  if (!family.length) {
+    list.innerHTML = `
+      <div class="person">
+        <div class="avatar-circle">👥</div>
+        <div class="person-main">
+          <div class="person-top">
+            <strong>No family configured</strong>
+            <span class="status-badge unknown">● Unknown</span>
+          </div>
+          <div class="person-bottom">
+            <span class="family-device">Add family in config.json</span>
+            <span class="battery">🔋 —</span>
+          </div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
   list.innerHTML = family.map(person => {
     const presence = getState(states, person.personEntity);
-    const battery = getState(states, person.batteryEntity);
+    const batteryLevel = getState(states, person.batteryEntity);
     const batteryState = getState(states, person.batteryStateEntity);
-    const alarm = getState(states, person.alarmEntity);
 
-    const status = formatPresence(presence);
-    const batteryText = battery ? `🔋 ${battery}%` : "🔋 —";
-    const chargeText = batteryState ? ` · ${batteryState}` : "";
-    const alarmText = formatAlarm(alarm);
+    const status = statusInfo(presence);
+    const battery = batteryInfo(batteryLevel, batteryState);
 
     return `
       <div class="person">
-        <span class="avatar">${person.emoji || "👤"}</span>
-        <div>
-          <strong>${person.name}</strong>
-          <p>${batteryText}${chargeText} · ${person.device || "Phone"}${alarmText}</p>
+        <div class="avatar-circle">
+          ${
+            person.photo
+              ? `<img src="${person.photo}" alt="${person.name}">`
+              : person.emoji || "👤"
+          }
         </div>
-        <b>${status}</b>
+
+        <div class="person-main">
+          <div class="person-top">
+            <strong>${person.name}</strong>
+            <span class="status-badge ${status.class}">
+              ${status.icon} ${status.text}
+            </span>
+          </div>
+
+          <div class="person-bottom">
+            <span class="family-device">
+              📱 ${person.device || "Phone"}
+            </span>
+
+            <span class="battery ${battery.class}">
+              ${battery.text}
+            </span>
+          </div>
+        </div>
       </div>
     `;
   }).join("");
 }
 
-async function loadFamily() {
-  const response = await fetch("/api/snapshot");
-  const snapshot = await response.json();
-  renderFamily(snapshot);
-}
-
-loadFamily();
-setInterval(loadFamily, 7000);
+window.addEventListener("snapshot", e => {
+  renderFamily(e.detail);
+});
