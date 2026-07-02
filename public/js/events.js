@@ -101,6 +101,83 @@ function setText(id, value) {
     if (el) el.textContent = value;
 }
 
+
+function renderFeaturedEvent(events) {
+    const card = document.getElementById("featured-event-card");
+    if (!card) return;
+
+    const event = (events || [])[0];
+
+    if (!event) {
+        card.innerHTML = `
+            <div class="featured-title">📍 LAST EVENT</div>
+            <div class="featured-empty">No recent events</div>
+        `;
+        return;
+    }
+
+    const confidence = getEventScore(event);
+    const typeName = eventTypeName(event);
+    const title = eventTitle(event);
+    const time = eventTime(event) || "--:--";
+    const image = event.thumbnailUrl || event.snapshotUrl || "";
+    const id = event.id || "";
+
+    card.innerHTML = `
+        <div class="featured-title">📍 LAST EVENT</div>
+
+        <div class="featured-body">
+            <div class="featured-image-wrap">
+                <img src="${image}" loading="lazy" onerror="this.style.display='none'">
+                <span class="featured-badge">${eventIcon(event)} ${typeName}</span>
+            </div>
+
+            <div class="featured-name">
+                <strong>${title}</strong>
+                <p>${cameraName(event.camera)}</p>
+            </div>
+
+            <div class="featured-chips">
+                <div class="featured-chip">
+                    <strong>🕒 ${time}</strong>
+                    <small>Today</small>
+                </div>
+                <div class="featured-chip">
+                    <strong>🎯 ${confidence || "—"}${confidence ? "%" : ""}</strong>
+                    <small>Confidence</small>
+                </div>
+            </div>
+
+            <div class="featured-actions">
+                <button type="button" data-featured-action="view" data-event-id="${id}">👁 View Details</button>
+                <button type="button" data-featured-action="clip" data-event-id="${id}">▶ Play Clip</button>
+            </div>
+        </div>
+    `;
+}
+
+function setupFeaturedEventActions() {
+    const card = document.getElementById("featured-event-card");
+    if (!card) return;
+
+    card.addEventListener("click", e => {
+        const button = e.target.closest("button[data-featured-action]");
+        if (!button) return;
+
+        const id = button.dataset.eventId || "";
+        if (!id) return;
+
+        openEvent(id);
+
+        if (button.dataset.featuredAction === "clip") {
+            setTimeout(() => {
+                const clip = document.getElementById("event-clip");
+                if (clip) clip.click();
+            }, 120);
+        }
+    });
+}
+
 function renderEvents(snapshot) {
     window.latestSnapshot = snapshot;
 
@@ -109,13 +186,14 @@ function renderEvents(snapshot) {
 
     const events = snapshot.frigate?.events || [];
     currentEvents = events;
+    renderFeaturedEvent(events);
 
     if (!events.length) {
         row.innerHTML = `<div class="event empty">No Events</div>`;
         return;
     }
 
-    row.innerHTML = events.slice(0, 5).map(e => `
+    row.innerHTML = events.slice(1, 6).map(e => `
         <article class="event" onclick="openEvent('${e.id || ""}')">
             <img src="${e.thumbnailUrl}" loading="lazy" onerror="this.style.display='none'">
 
@@ -252,6 +330,8 @@ window.addEventListener("snapshot", e => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+    setupFeaturedEventActions();
+
     const modal = document.getElementById("event-modal");
 
     if (modal) {

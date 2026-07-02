@@ -7,7 +7,7 @@ const config = require("../config/config");
 const ha = require("./api/homeassistant");
 const frigate = require("./api/frigate");
 
-const VERSION = "0.7.1";
+const VERSION = "0.7.5";
 
 const app = express();
 const server = http.createServer(app);

@@ -25,3 +25,7 @@
 - Moved assets into public/
 - Moved APIs into server/api
 - Added documentation
+## v0.7.5 - Left Column Polish
+- Moved lights above featured Last Event.
+- Removed Lights header.
+- Kept middle camera section unchanged.
